@@ -5,19 +5,23 @@
   <link rel="stylesheet" type="text/css" href="css/normalize.css">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link href=“https://fonts.googleapis.com/css?family=Open+Sans:300,800” rel=“stylesheet”>
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 <body>
   <header>
-    <h1 class = 'ideabox-header'>ideabox</h1>
-    <input type="text" placeholder="search">
+    <h1 class = 'ideabox-header'>ideabox<span class = 'triples-text'>triples</span></h1>
+    <div>
+      <input type="text" id = "search" placeholder="Search">
+      <i class="fas fa-search"></i>
+    </div>
   </header>
   <main>
     <form>
-      <label for="title">Title</label>
+      <label for="title" class = 'title-text'>Title</label>
       <input id="title" type="text">
       <label for="body">Body</label>
       <textarea id="body"></textarea>
-      <input type="submit" value="Save">
+      <input type="submit" class = 'save' value="Save">
     </form>
   </main>
   <section>
