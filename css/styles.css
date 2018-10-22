@@ -33,6 +33,10 @@ form {
 }
 
 
-#title, textarea, input[type='submit'] { 
+#title,
+textarea,
+input[type='submit'] {
+  border: none;
+  margin-bottom: 20px;
   width: 100%;
  }
