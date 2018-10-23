@@ -31,14 +31,11 @@ get('section').addEventListener('click', function(event) {
 
 // Loses focus of target element 1 of 2
 get('section').addEventListener('keypress', function(event){
-//  console.log(event.keyCode);
-//  console.log(event.target);
- var keyCode = event.key;
- if(keyCode === 'Enter'){
-   console.log("ahhhh yeaaa");
+ if(event.key === 'Enter'){
+   console.log(event.target.closest(`article[data-id]`));
+  // get(`article[data-id="${event.target}"]`).dataset.id
    event.target.blur();
  }
-//  event.target.blur();
 })
 
 window.onload = function(){
