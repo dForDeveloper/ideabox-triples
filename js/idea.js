@@ -1,30 +1,26 @@
-class Idea{
-    constructor(inId, inTitle, inBody, inQuality){
-        this.id = inId;
-        this.title = inTitle;
-        this.body = inBody;
-        if(inQuality === 'genius' ||
-           inBody === 'plausible' ||
-           inQuality === 'swill'){
-            this.quality = inQuality;
+class Idea {
+  constructor(inId, inTitle, inBody, inQuality) {
+    this.id = inId;
+    this.title = inTitle;
+    this.body = inBody;
+    this.quality = 'Swill'
+  }
 
-        }
-    }
+  saveToStorage() {
+    localStorage.setItem(this.id, JSON.stringify(this));
+  }
 
-    saveToStorage(){
-        localStorage.setItem(this.id, JSON.stringify(this));
-    }
+  deleteFromStorage() {
+    localStorage.removeItem(this.id);
+  }
 
-    deleteFromStorage(){
-        localStorage.removeItem(this.id);
-    }
+  updateSelf(inTitle, inBody) {
+    this.title = inTitle;
+    this.body = inBody;
+    this.saveToStorage();
+  }
 
-    updateSelf(){
-        this.saveToStorage();
-    }
-
-    updateQuality(inQuality){
-        this.quality = inQuality;
-    }
-    
+  updateQuality(inQuality) {
+    this.quality = inQuality;
+  }
 }
