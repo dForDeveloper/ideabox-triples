@@ -6,6 +6,7 @@ function generateIdeas() {
 }  
 
 var ideas = [];
+var id = 0;
 
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
@@ -38,6 +39,11 @@ window.onload = function(){
       continue;
     }
     tempObj = JSON.parse(localStorage.getItem(i));
+    for(var key in tempObj){
+      if(tempObj.hasOwnProperty(key)){
+        console.log(key + "->" + tempObj[key]);
+      }
+    }
     tempIdea = new Idea(tempObj.id, tempObj.title, tempObj.body, tempObj.quality);
     ideas.push(tempIdea);
     addCard(tempIdea);
