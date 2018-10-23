@@ -6,11 +6,9 @@ function generateIdeas() {
 }  
 
 var ideas = [];
-var id = 0;
-
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
-  var id = localStorage.length;
+  var id = nextID();
   var title = get('#title-input').value;
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
@@ -31,22 +29,13 @@ get('section').addEventListener('click', function() {
 
 window.onload = function(){
   var ideaCount = localStorage.length;
-  var tempObj;
-  var tempIdea;
-  for(var i = 0; i < ideaCount; i++){
-    if (JSON.parse(localStorage.getItem(i) === null)) {
-      ideaCount++;
-      continue;
-    }
-    tempObj = JSON.parse(localStorage.getItem(i));
-    for(var key in tempObj){
-      if(tempObj.hasOwnProperty(key)){
-        console.log(key + "->" + tempObj[key]);
-      }
-    }
-    tempIdea = new Idea(tempObj.id, tempObj.title, tempObj.body, tempObj.quality);
+  var parsedObj, tempIdea;
+  for (var i = 0; i < ideaCount; i++){
+    parsedObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+    tempIdea = new Idea(parsedObj.id, parsedObj.title, parsedObj.body, parsedObj.quality);
     ideas.push(tempIdea);
     addCard(tempIdea);
+    console.table(parsedObj);
   }
 }
 
@@ -72,6 +61,33 @@ function addCard(idea) {
   <img src="images/delete.svg" alt="delete" class="delete">
   </div>`;
   get('section').prepend(newCard);
+}
+
+function nextID(){
+  //iterates over data model looking for next 
+  //available id by checking each items id
+  //and returning the lowest available one
+  var tempID = 0;
+  for(var i = 0; i < ideas.length; i++){
+    if(ideas[i].id === tempID){
+      tempID++;
+    }
+  }
+  return tempID;
+
+  //Will assign lowest available id number, will change the order of items on load(CAN DELETE)
+  // var tempID = 0;
+  // for(var i = 0; i < ideas.length; i++){
+  //   if(ideas[i].id > tempID){
+  //     tempID++;
+  //   }
+  // }
+  // return tempID;
+
+  //Just to show how to get a variable key name from local storage(CAN DELETE)
+  // for(var i = 0; i < localStorage.length; i++){
+  //   console.log(localStorage.key(i));
+  //               }
 }
 
 /*

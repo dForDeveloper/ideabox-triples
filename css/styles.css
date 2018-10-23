@@ -32,7 +32,6 @@ h1 {
   width: 230px;
 }
 
-
 #title-input {
   height: 40px;
 }
@@ -64,13 +63,11 @@ label {
   padding-bottom: 5px;
 }
 
-
 form {
   margin: auto;
   max-width: 700px;
   width: 80%;
 }
-
 
 #title-input,
 textarea,
@@ -126,4 +123,3 @@ article {
   float: right;
   margin-right: 12px;
 }
-
