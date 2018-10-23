@@ -5,10 +5,10 @@ function generateIdeas() {
   }
 }  
 
-var ideas = [];
+var ideas = {};
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
-  var id = nextID();
+  var id = ideas[localStorage.length];
   var title = get('#title-input').value;
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
@@ -25,14 +25,13 @@ get('section').addEventListener('click', function(event) {
     ideas.splice(index, 1);
     deletedIdea.remove();
   }
-
   userUpdateCard(event);
 });
 
 // Loses focus of target element 1 of 2
 get('section').addEventListener('keypress', function(event){
  if(event.key === 'Enter'){
-   console.log(event.target.closest(`article[data-id]`));
+   console.log(event.target.closest(`article[data-id]`).dataset.id);
   // get(`article[data-id="${event.target}"]`).dataset.id
    event.target.blur();
  }
@@ -41,13 +40,16 @@ get('section').addEventListener('keypress', function(event){
 window.onload = function(){
   var ideaCount = localStorage.length;
   var parsedObj, tempIdea;
+
   for (var i = 0; i < ideaCount; i++){
     parsedObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
     tempIdea = new Idea(parsedObj.id, parsedObj.title, parsedObj.body, parsedObj.quality);
-    ideas.push(tempIdea);
+    var tempID = tempIdea.id;
+    ideas[`${tempID}`]  = tempIdea;
     addCard(tempIdea);
     console.table(parsedObj);
   }
+
 }
 
 function get(element) {
@@ -74,32 +76,32 @@ function addCard(idea) {
   get('section').prepend(newCard);
 }
 
-function nextID(){
-  //iterates over data model looking for next 
-  //available id by checking each items id
-  //and returning the lowest available one
-  var tempID = 0;
-  for(var i = 0; i < ideas.length; i++){
-    if(ideas[i].id === tempID){
-      tempID++;
-    }
-  }
-  return tempID;
+// function nextID(){
+//   //iterates over data model looking for next 
+//   //available id by checking each items id
+//   //and returning the lowest available one
+//   var tempID = 0;
+//   for(var i = 0; i < ideas.length; i++){
+//     if(){
+//       tempID++;
+//     }
+//   }
+//   return tempID;
 
-  //Will assign lowest available id number, will change the order of items on load(CAN DELETE)
-  // var tempID = 0;
-  // for(var i = 0; i < ideas.length; i++){
-  //   if(ideas[i].id > tempID){
-  //     tempID++;
-  //   }
-  // }
-  // return tempID;
+//   //Will assign lowest available id number, will change the order of items on load(CAN DELETE)
+//   // var tempID = 0;
+//   // for(var i = 0; i < ideas.length; i++){
+//   //   if(ideas[i].id > tempID){
+//   //     tempID++;
+//   //   }
+//   // }
+//   // return tempID;
 
-  //Just to show how to get a variable key name from local storage(CAN DELETE)
-  // for(var i = 0; i < localStorage.length; i++){
-  //   console.log(localStorage.key(i));
-  //               }
-}
+//   //Just to show how to get a variable key name from local storage(CAN DELETE)
+//   // for(var i = 0; i < localStorage.length; i++){
+//   //   console.log(localStorage.key(i));
+//   //               }
+// }
 
 /*
 Updating Cards
