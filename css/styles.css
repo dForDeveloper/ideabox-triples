@@ -32,7 +32,6 @@ h1 {
   width: 230px;
 }
 
-
 #title-input {
   height: 40px;
 }
@@ -64,13 +63,11 @@ label {
   padding-bottom: 5px;
 }
 
-
 form {
   margin: auto;
   max-width: 700px;
   width: 80%;
 }
-
 
 #title-input,
 textarea,
@@ -120,10 +117,10 @@ article {
   padding-left: 15px;
   padding-top: 10px;
   border-top: solid 1px #D2CCCD;
+  color: #6E646B;
 }
 
 .delete{
   float: right;
   margin-right: 12px;
 }
-
