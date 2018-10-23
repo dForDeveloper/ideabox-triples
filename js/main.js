@@ -8,7 +8,6 @@ function generateIdeas() {
 var ideas = {};
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
-  
   var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
   var title = get('#title-input').value;
   var body = get('#body-input').value;
@@ -18,7 +17,7 @@ get('.save').addEventListener('click', function(event) {
   clearInput();
 });
 
-get('section').addEventListener('click', function(event) {
+get('body').addEventListener('click', function(event) {
   if (event.target.classList.contains('delete')) {
     //Delete from local Storage
     ideas[event.target.closest('article').dataset.id].deleteFromStorage();
@@ -34,23 +33,27 @@ get('section').addEventListener('click', function(event) {
     // delete ideas[key];
     // deletedIdea.remove();
   }
-  //userUpdateCard(event);
+  // userUpdateCard(event);
 });
+// form.addEventListener("blur", function( event ) {
+//   event.target.style.background = "black";    
+// }, true);
+
+get('h2').addEventListener('focus', function(e){
+  console.log(e);
+})
 
 // Loses focus of target element 1 of 2
 get('section').addEventListener('keypress', function(event){
  if(event.key === 'Enter'){
-   var cardTitle = event.target.closest('.card-title');
-   console.log(cardTitle.innerText);
-  //  var cardBody = event.target.closest('.card-body');
-  //  console.log(cardBody.innerText);
-   //save to datamodel
-  //  ideas[event.target.closest('article').dataset.id].updateSelf()
+   //grabs the id from parent card
+  var id = event.target.closest('article').dataset.id
+  //gets dom data from title/body of focused card
+  var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
+  var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
+   //save to datamodel & localstorage
+   ideas[id].updateSelf(cardTitle, cardBody);
   //  get(event.target.closest('article'));
-   //save to localstorage
-   console.log(event.target.closest(`article[data-id]`).dataset.id);
-  // get(`article[data-id="${event.target}"]`).dataset.id
-  
    event.target.blur();
  }
 })
@@ -103,6 +106,17 @@ Updating Cards
     get changes to title and body, getID from dom
     call updateSelf(id, title, body);
     */
+   var hasLastCard = false; 
+  //  var isLastCard= false;
 // function userUpdateCard(e){
-//   e.target.keypress();
+//   if(!e.target.closest('article') || e.target.closest('article').dataset.id != lastCardId &&
+//       hasLastCard){
+//     console.log("NOT A CARD BRO");
+
+//   }else(e.target.closest('article').dataset.id)
+    // e.target.closest('article').dataset.id
+  //store last id
+  // if last id  != current id
+  // update last card from last id
+  // console.log(e.target.closest('article').dataset.id);
 // }
