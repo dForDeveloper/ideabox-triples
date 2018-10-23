@@ -1,8 +1,6 @@
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
   var id = localStorage.length;
-  // var title = document.getElementById('title-input').value;
-  // var body = document.getElementById('body-input').value;
   var title = get('#title-input').value;
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
@@ -29,7 +27,7 @@ function addCard(idea) {
   <div class="idea-footer">
     <img src="images/downvote.svg" alt="downvote">
     <img src="images/upvote.svg" alt="upvote">
-    Quality: ${idea.quality}
+    Quality: <span class="quality">${idea.quality}</span>
     <img src="images/delete.svg" alt="delete">
   </div>`;
   get('section').prepend(newCard);
