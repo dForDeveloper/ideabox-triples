@@ -11,6 +11,12 @@ get('.save').addEventListener('click', function(event) {
   clearInput();
 });
 
+get('section').addEventListener('click', function() {
+  if (event.target.classList.contains('delete-button')) {
+    var deletedIdea = event.target.parentNode.parentNode;
+    deletedIdea.remove();
+  }
+});
 
 window.onload = function(){
   var ideaCount = localStorage.length;
@@ -43,7 +49,7 @@ function addCard(idea) {
   <img src="images/downvote.svg" alt="downvote">
   <img src="images/upvote.svg" alt="upvote">
   Quality: <span class="quality">${idea.quality}</span>
-  <img src="images/delete.svg" alt="delete">
+  <img src="images/delete.svg" alt="delete" class="delete-button">
   </div>`;
   get('section').prepend(newCard);
 }
