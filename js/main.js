@@ -34,14 +34,19 @@ get('section').addEventListener('click', function(event) {
     // delete ideas[key];
     // deletedIdea.remove();
   }
-  userUpdateCard(event);
+  //userUpdateCard(event);
 });
 
 // Loses focus of target element 1 of 2
 get('section').addEventListener('keypress', function(event){
  if(event.key === 'Enter'){
+   var cardTitle = event.target.closest('.card-title');
+   console.log(cardTitle.innerText);
+  //  var cardBody = event.target.closest('.card-body');
+  //  console.log(cardBody.innerText);
    //save to datamodel
-   ideas[event.target.closest('article').dataset.id]get(event.target.closest('article'));
+  //  ideas[event.target.closest('article').dataset.id].updateSelf()
+  //  get(event.target.closest('article'));
    //save to localstorage
    console.log(event.target.closest(`article[data-id]`).dataset.id);
   // get(`article[data-id="${event.target}"]`).dataset.id
@@ -98,6 +103,6 @@ Updating Cards
     get changes to title and body, getID from dom
     call updateSelf(id, title, body);
     */
-function userUpdateCard(e){
-  e.target.keypress();
-}
+// function userUpdateCard(e){
+//   e.target.keypress();
+// }
