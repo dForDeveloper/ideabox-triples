@@ -3,7 +3,8 @@ class Idea {
     this.id = inId;
     this.title = inTitle;
     this.body = inBody;
-    this.quality = inQuality || 'swill';
+    this.qualityArray = ['swill', 'genius', 'plausible'];
+    this.quality = inQuality || this.qualityArray[0];
   }
 
   saveToStorage() {
@@ -20,7 +21,14 @@ class Idea {
     this.saveToStorage();
   }
 
-  updateQuality(inQuality) {
-    this.quality = inQuality;
+  updateQuality(direction) {
+    if (direction === 'up' && this.qualityArray[0] !== 'genius') {
+      this.qualityArray.unshift(this.qualityArray.pop());
+      this.quality = this.qualityArray[0];
+    } else if (direction === 'down' && this.qualityArray[0] !== 'swill') {
+      this.qualityArray.push(this.qualityArray.shift());
+      this.quality = this.qualityArray[0];
+    }
+    this.saveToStorage()
   }
 }
