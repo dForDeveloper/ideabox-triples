@@ -3,7 +3,7 @@ class Idea {
     this.id = inId;
     this.title = inTitle;
     this.body = inBody;
-    this.quality = 'Swill'
+    this.quality = inQuality || 'swill';
   }
 
   saveToStorage() {

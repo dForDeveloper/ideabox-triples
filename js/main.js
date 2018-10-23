@@ -14,9 +14,13 @@ get('.save').addEventListener('click', function(event) {
 
 window.onload = function(){
   var ideaCount = localStorage.length;
+  var tempObj;
+  var tempIdea;
   for(var i = 0; i < ideaCount; i++){
-    ideas.push(JSON.parse(localStorage.getItem(i)));
-    addCard(JSON.parse(localStorage.getItem(i)));
+    tempObj = JSON.parse(localStorage.getItem(i));
+    tempIdea = new Idea(tempObj.id, tempObj.title, tempObj.body, tempObj.quality);
+    ideas.push(tempIdea);
+    addCard(tempIdea);
   }
 }
 
