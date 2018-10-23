@@ -1,3 +1,10 @@
+function generateIdeas() {
+  for (var i = 0; i < 5; i++) {
+    var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
+    newIdea.saveToStorage();
+  }
+}  
+
 var ideas = [];
 
 get('.save').addEventListener('click', function(event) {
@@ -11,12 +18,25 @@ get('.save').addEventListener('click', function(event) {
   clearInput();
 });
 
+get('section').addEventListener('click', function() {
+  if (event.target.classList.contains('delete')) {
+    var deletedIdea = event.target.parentNode.parentNode;
+    var index = parseInt(deletedIdea.dataset.id);
+    ideas[index].deleteFromStorage();
+    ideas.splice(index, 1);
+    deletedIdea.remove();
+  }
+});
 
 window.onload = function(){
   var ideaCount = localStorage.length;
   var tempObj;
   var tempIdea;
   for(var i = 0; i < ideaCount; i++){
+    if (JSON.parse(localStorage.getItem(i) === null)) {
+      ideaCount++;
+      continue;
+    }
     tempObj = JSON.parse(localStorage.getItem(i));
     tempIdea = new Idea(tempObj.id, tempObj.title, tempObj.body, tempObj.quality);
     ideas.push(tempIdea);
@@ -43,7 +63,7 @@ function addCard(idea) {
   <img src="images/downvote.svg" alt="downvote">
   <img src="images/upvote.svg" alt="upvote">
   Quality: <span class="quality">${idea.quality}</span>
-  <img src="images/delete.svg" alt="delete">
+  <img src="images/delete.svg" alt="delete" class="delete">
   </div>`;
   get('section').prepend(newCard);
 }
