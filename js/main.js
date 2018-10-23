@@ -25,7 +25,17 @@ get('body').addEventListener('click', function(event) {
     event.target.closest('article').remove();
   }
   if(event.target.closest('article')){
-  event.target.onblur = event => saveUserEdits(event);
+    event.target.onblur = event => saveUserEdits(event);
+  }
+  if (event.target.classList.contains('upvote')) {
+    var id = event.target.closest('article').dataset.id;
+    ideas[id].updateQuality('up');
+    event.target.nextElementSibling.innerText = ideas[id].quality;
+  }
+  if (event.target.classList.contains('downvote')) {
+    var id = event.target.closest('article').dataset.id;
+    ideas[id].updateQuality('down');
+    event.target.nextElementSibling.nextElementSibling.innerText = ideas[id].quality;
   }
 });
 
