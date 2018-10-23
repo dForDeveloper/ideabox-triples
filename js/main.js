@@ -57,11 +57,11 @@ function addCard(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
   newCard.innerHTML =
-  `<h2>${idea.title}</h2>
-  <p>${idea.body}</p>
+  `<h2 class="card-title">${idea.title}</h2>
+  <p class="card-body">${idea.body}</p>
   <div class="idea-footer">
-  <img src="images/downvote.svg" alt="downvote">
-  <img src="images/upvote.svg" alt="upvote">
+  <img src="images/downvote.svg" alt="downvote" class="downvote">
+  <img src="images/upvote.svg" alt="upvote" class="upvote">
   Quality: <span class="quality">${idea.quality}</span>
   <img src="images/delete.svg" alt="delete" class="delete">
   </div>`;

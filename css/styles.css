@@ -89,7 +89,7 @@ input[type='submit'] {
   width: 27px;
  }
 
-.generated-card {
+article {
   border:solid 1px #D2CCCD;
   max-width: 700px;
   margin:auto;
