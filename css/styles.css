@@ -86,5 +86,44 @@ input[type='submit'] {
  }
 
  img {
-  width: 20px;
+  width: 27px;
  }
+
+.generated-card {
+  border:solid 1px #D2CCCD;
+  max-width: 700px;
+  margin:auto;
+  height: 180px;
+  margin-top: 23px;
+}
+
+.card-area {
+  width:100%;
+  color: #FFFFFF;
+}
+
+.card-title {
+  color: #6E646B;
+  padding:20px; 
+  font-weight: bold;
+}
+
+.card-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 25px;
+  font-weight: 100;
+  color: #7C7879;
+}
+
+.idea-footer{
+  padding-left: 15px;
+  padding-top: 10px;
+  border-top: solid 1px #D2CCCD;
+}
+
+.delete{
+  float: right;
+  margin-right: 12px;
+}
+
