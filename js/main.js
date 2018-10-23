@@ -39,22 +39,11 @@ get('body').addEventListener('click', function(event) {
 //   event.target.style.background = "black";    
 // }, true);
 
-get('h2').addEventListener('focus', function(e){
-  console.log(e);
-})
 
 // Loses focus of target element 1 of 2
 get('section').addEventListener('keypress', function(event){
  if(event.key === 'Enter'){
-   //grabs the id from parent card
-  var id = event.target.closest('article').dataset.id
-  //gets dom data from title/body of focused card
-  var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
-  var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
-   //save to datamodel & localstorage
-   ideas[id].updateSelf(cardTitle, cardBody);
-  //  get(event.target.closest('article'));
-   event.target.blur();
+  saveUserEdits(event);
  }
 })
 
@@ -68,11 +57,22 @@ window.onload = function(){
     var tempID = tempIdea.id;
     ideas[`${tempID}`]  = tempIdea;
     addCard(tempIdea);
-    console.table(parsedObj);
   }
-
+  document.querySelectorAll('.editable').forEach(e => e.addEventListener('blur', e => {
+    saveUserEdits(e)}));
 }
 
+function saveUserEdits(event){
+     //grabs the id from parent card
+     var id = event.target.closest('article').dataset.id
+     //gets dom data from title/body of focused card
+     var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
+     var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
+      //save to datamodel & localstorage
+      ideas[id].updateSelf(cardTitle, cardBody);
+     //  get(event.target.closest('article'));
+      event.target.blur();
+}
 function get(element) {
   return document.querySelector(element);
 }
@@ -86,14 +86,15 @@ function addCard(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
   newCard.innerHTML =
-  `<h2 class="card-title" contenteditable="true">${idea.title}</h2>
-  <p class="card-body" contenteditable="true">${idea.body}</p>
+  `<h2 class="card-title editable" contenteditable="true">${idea.title}</h2>
+  <p class="card-body editable" contenteditable="true">${idea.body}</p>
   <div class="idea-footer">
   <img src="images/downvote.svg" alt="downvote" class="downvote">
   <img src="images/upvote.svg" alt="upvote" class="upvote">
   Quality: <span class="quality">${idea.quality}</span>
   <img src="images/delete.svg" alt="delete" class="delete">
   </div>`;
+  newCard.addEventListener('blur', e => saveUserEdits(e));
   get('section').prepend(newCard);
 }
 
