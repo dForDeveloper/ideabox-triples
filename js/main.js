@@ -19,10 +19,13 @@ get('.save').addEventListener('click', function(event) {
 
 get('section').addEventListener('click', function(event) {
   if (event.target.classList.contains('delete')) {
+    // var deletedIdea = event.target.closest('article[data-id]').dataset.id;
+    // event.target.closest('article').remove();
     var deletedIdea = event.target.parentNode.parentNode;
-    var index = parseInt(deletedIdea.dataset.id);
-    ideas[index].deleteFromStorage();
-    ideas.splice(index, 1);
+    var key = parseInt(deletedIdea.dataset.id);
+    ideas[key].deleteFromStorage();
+    // ideas.splice(key, 1);
+    delete ideas[key];
     deletedIdea.remove();
   }
   userUpdateCard(event);
