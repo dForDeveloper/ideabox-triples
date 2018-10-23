@@ -17,7 +17,7 @@ get('.save').addEventListener('click', function(event) {
   clearInput();
 });
 
-get('section').addEventListener('click', function() {
+get('section').addEventListener('click', function(event) {
   if (event.target.classList.contains('delete')) {
     var deletedIdea = event.target.parentNode.parentNode;
     var index = parseInt(deletedIdea.dataset.id);
@@ -25,7 +25,21 @@ get('section').addEventListener('click', function() {
     ideas.splice(index, 1);
     deletedIdea.remove();
   }
+
+  userUpdateCard(event);
 });
+
+// Loses focus of target element 1 of 2
+get('section').addEventListener('keypress', function(event){
+//  console.log(event.keyCode);
+//  console.log(event.target);
+ var keyCode = event.key;
+ if(keyCode === 'Enter'){
+   console.log("ahhhh yeaaa");
+   event.target.blur();
+ }
+//  event.target.blur();
+})
 
 window.onload = function(){
   var ideaCount = localStorage.length;
@@ -99,3 +113,6 @@ Updating Cards
     get changes to title and body, getID from dom
     call updateSelf(id, title, body);
     */
+function userUpdateCard(e){
+  console.log(e.target);
+}
