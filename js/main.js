@@ -1,3 +1,5 @@
+var ideas = [];
+
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
   var id = localStorage.length;
@@ -8,6 +10,15 @@ get('.save').addEventListener('click', function(event) {
   addCard(newIdea);
   clearInput();
 });
+
+
+window.onload = function(){
+  var ideaCount = localStorage.length;
+  for(var i = 0; i < ideaCount; i++){
+    ideas.push(JSON.parse(localStorage.getItem(i)));
+    addCard(JSON.parse(localStorage.getItem(i)));
+  }
+}
 
 function get(element) {
   return document.querySelector(element);
@@ -25,10 +36,10 @@ function addCard(idea) {
   `<h2>${idea.title}</h2>
   <p>${idea.body}</p>
   <div class="idea-footer">
-    <img src="images/downvote.svg" alt="downvote">
-    <img src="images/upvote.svg" alt="upvote">
-    Quality: <span class="quality">${idea.quality}</span>
-    <img src="images/delete.svg" alt="delete">
+  <img src="images/downvote.svg" alt="downvote">
+  <img src="images/upvote.svg" alt="upvote">
+  Quality: <span class="quality">${idea.quality}</span>
+  <img src="images/delete.svg" alt="delete">
   </div>`;
   get('section').prepend(newCard);
 }
@@ -41,4 +52,4 @@ Updating Cards
     get the object by id from .dataset
     get changes to title and body, getID from dom
     call updateSelf(id, title, body);
-*/
+    */
