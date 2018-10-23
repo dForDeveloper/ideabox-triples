@@ -13,6 +13,7 @@ get('.save').addEventListener('click', function(event) {
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
   newIdea.saveToStorage();
+  ideas[`${id}`] = newIdea;
   addCard(newIdea);
   clearInput();
 });
@@ -22,6 +23,9 @@ get('body').addEventListener('click', function(event) {
     ideas[event.target.closest('article').dataset.id].deleteFromStorage();
     delete ideas[event.target.closest('article').dataset.id];
     event.target.closest('article').remove();
+  }
+  if(event.target.closest('article')){
+  event.target.onblur = event => saveUserEdits(event);
   }
 });
 
@@ -41,8 +45,8 @@ window.onload = function(){
     ideas[`${tempID}`]  = tempIdea;
     addCard(tempIdea);
   }
-  document.querySelectorAll('.editable').forEach(e => e.addEventListener('blur', e => {
-    saveUserEdits(e)}));
+  // document.querySelectorAll('.editable').forEach(e => e.addEventListener('blur', e => {
+  //   saveUserEdits(e)}));
 }
 
 function saveUserEdits(event){
@@ -74,6 +78,6 @@ function addCard(idea) {
   Quality: <span class="quality">${idea.quality}</span>
   <img src="images/delete.svg" alt="delete" class="delete">
   </div>`;
-  newCard.addEventListener('blur', e => saveUserEdits(e));
+  // newCard.addEventListener('blur', e => saveUserEdits(e));
   get('section').prepend(newCard);
 }
