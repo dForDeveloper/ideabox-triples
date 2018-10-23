@@ -8,7 +8,7 @@ function generateIdeas() {
 var ideas = {};
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
-  var id = ideas[localStorage.length];
+  var id = localStorage.key(localStorage.length - 1).id + 1;
   var title = get('#title-input').value;
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
