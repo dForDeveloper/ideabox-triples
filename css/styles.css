@@ -92,15 +92,17 @@ article {
   margin:auto;
   height: 180px;
   margin-top: 23px;
+
+  color: #6E646B;
 }
 
 .card-area {
   width:100%;
-  color: #FFFFFF;
+  /* color: #FFFFFF; */
 }
 
 .card-title {
-  color: #6E646B;
+  /* color: #6E646B; */
   padding:20px; 
   font-weight: bold;
 }
@@ -110,14 +112,13 @@ article {
   padding-right: 20px;
   padding-bottom: 25px;
   font-weight: 100;
-  color: #7C7879;
+  /* color: #7C7879; */
 }
 
 .idea-footer{
   padding-left: 15px;
   padding-top: 10px;
   border-top: solid 1px #D2CCCD;
-  color: #6E646B;
 }
 
 .delete{
