@@ -1,5 +1,5 @@
 function generateIdeas() {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 10; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     newIdea.saveToStorage();
   }
@@ -95,14 +95,30 @@ function addCard(idea) {
   get('section').prepend(newCard);
 }
 
+// var cardsToShow = [];
 function sortCards(e) {
   e.preventDefault();
-  document.querySelectorAll('.quality').forEach(function (span) {
-    if (span.innerText !== e.target.innerText.toLowerCase() && span.closest('article').classList.value !== 'hidden') {
-      span.closest('article').classList.add('hidden');
-      console.log('hide');
-    } else {
+  var clickedButton = e.target;
+  var clickedButtonText = e.target.innerText.toLowerCase();
+
+  if (clickedButtonText !== 'show all') {
+    console.log(clickedButtonText);
+    document.querySelectorAll('.quality').forEach(function (span) {
+      if (clickedButtonText === span.innerText) {
+        span.closest('article').classList.remove('hidden');
+      } else {
+        span.closest('article').classList.add('hidden');
+      }
+    });
+  } else {
+    console.log("SHOWING ERRYTHANG");
+    document.querySelectorAll('.quality').forEach(function (span) {
       span.closest('article').classList.remove('hidden');
-    }
+    });
+  }
+  document.querySelectorAll('button').forEach(function (button) {
+    button.disabled = false;
   });
+
+  clickedButton.disabled = true;
 }

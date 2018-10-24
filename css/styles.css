@@ -5,6 +5,9 @@
   margin: 0;
 }
 
+button:disabled{
+  background-color: peru;
+}
 header {
   background-color: rgb(49,42,48);
   display: flex;

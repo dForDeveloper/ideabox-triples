@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <title>ideabox</title>
-  <link rel="stylesheet" type="text/css" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <link href=“https://fonts.googleapis.com/css?family=Open+Sans:300,800” rel=“stylesheet”>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-</head>
+  <head>
+    <title>ideabox</title>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href=“https://fonts.googleapis.com/css?family=Open+Sans:300,800” rel=“stylesheet”>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous">
+  </head>
 
-<body>
-  <header>
-    <h1 class="ideabox-header">ideabox<span class="triples-text">triples</span></h1>
-    <div>
-      <input type="text" id="search" placeholder="Search">
-      <i class="fas fa-search"></i>
-    </div>
-  </header>
-  <main>
-    <form>
+  <body>
+    <header>
+      <h1 class="ideabox-header">ideabox<span class="triples-text">triples</span></h1>
+      <div>
+        <input type="text" id="search" placeholder="Search">
+        <i class="fas fa-search"></i>
+      </div>
+    </header>
+    <main>
+      <form>
+        <label for="title-input" class="title-text">Title</label>
+        <input id="title-input" type="text">
+        <label for="body-input">Body</label>
+        <textarea id="body-input"></textarea>
+        <input type="submit" class="save" value="Save">
+      </form>
       <div class="filter-buttons">
+        <button class="show-all-button">Show All</button>
         <button class="swill-button">Swill</button>
         <button class="plausible-button">Plausible</button>
         <button class="genius-button">Genius</button>
       </div>
-      <label for="title-input" class="title-text">Title</label>
-      <input id="title-input" type="text">
-      <label for="body-input">Body</label>
-      <textarea id="body-input"></textarea>
-      <input type="submit" class="save" value="Save">
-    </form>
-  </main>
-  <section class="card-area">
-    <!-- idea cards go here -->
-    <!--  <article class="generated-card" data-id="9999">
+    </main>
+    <section class="card-area">
+      <!-- idea cards go here -->
+      <!--  <article class="generated-card" data-id="9999">
       <h2 class="card-title">Lorem</h2>
       <p class="card-body"> 
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -47,9 +49,9 @@
         <img class ="delete" src="images/delete.svg" alt="delete">
       </div>
     </article> -->
-  </section>
-  <script type="text/javascript" src="js/idea.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
-</body>
+    </section>
+    <script type="text/javascript" src="js/idea.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
 
 </html>
