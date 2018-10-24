@@ -125,5 +125,7 @@ article {
   margin-right: 12px;
 }
 
-.filter-buttons{}
+.hidden {
+  display: none;
+}
 
