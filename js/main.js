@@ -91,3 +91,30 @@ function addCard(idea) {
   // newCard.addEventListener('blur', e => saveUserEdits(e));
   get('section').prepend(newCard);
 }
+
+function sortCards(e){
+  document.querySelectorAll('.quality').forEach(function(quality){
+    if(quality.target.innerText !== e.target.innerText){
+      quality.target.closest('article').classList.add('hidden')
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
