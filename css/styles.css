@@ -125,3 +125,8 @@ article {
   float: right;
   margin-right: 12px;
 }
+
+.hidden {
+  display: none;
+}
+
