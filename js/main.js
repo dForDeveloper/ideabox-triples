@@ -1,5 +1,5 @@
 function generateIdeas() {
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 5; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     newIdea.saveToStorage();
   }
@@ -44,10 +44,11 @@ get('body').addEventListener('click', function (event) {
   }
 });
 
-get('section').addEventListener('keypress', function (event) {
+get('body').addEventListener('keyup', function (event) {
   if (event.key === 'Enter') {
     saveUserEdits(event);
   }
+  searchCards(event);
 })
 
 window.onload = function () {
@@ -84,8 +85,8 @@ function addCard(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
   newCard.innerHTML =
-    `<h2 class="card-title editable" contenteditable="true">${idea.title}</h2>
-  <p class="card-body editable" contenteditable="true">${idea.body}</p>
+    `<span class="searchable"><h2 class="card-title editable" contenteditable="true">${idea.title}</h2>
+  <p class="card-body editable" contenteditable="true">${idea.body}</p></span>
   <div class="idea-footer">
   <img src="images/downvote.svg" alt="downvote" class="downvote">
   <img src="images/upvote.svg" alt="upvote" class="upvote">
@@ -101,7 +102,7 @@ function sortCards(e) {
   var clickedButton = e.target;
   var clickedButtonText = e.target.innerText.toLowerCase();
 
-  if (clickedButtonText !== 'show all') {
+  if (clickedButtonText !== 'unfilter') {
     console.log(clickedButtonText);
     document.querySelectorAll('.quality').forEach(function (span) {
       if (clickedButtonText === span.innerText) {
@@ -122,3 +123,34 @@ function sortCards(e) {
 
   clickedButton.disabled = true;
 }
+
+
+function searchCards(event) {
+  get('.unfilter-button').disabled = false;
+  get('.unfilter-button').click();
+  if (event.target.id === 'search') {
+    document.querySelectorAll('.searchable').forEach(elem => {
+      if (!elem.innerText.includes(event.target.value)) {
+        elem.closest('article').classList.add('hidden');
+      }
+    }); 
+
+      
+  }  
+  // var search
+  // console.log(event);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
