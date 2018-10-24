@@ -8,7 +8,9 @@ function generateIdeas() {
 var ideas = {};
 get('.save').addEventListener('click', function(event) {
   event.preventDefault();
+
   var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
+
   var title = get('#title-input').value;
   var body = get('#body-input').value;
   var newIdea = new Idea(id, title, body);
@@ -20,6 +22,7 @@ get('.save').addEventListener('click', function(event) {
 
 get('body').addEventListener('click', function(event) {
   if (event.target.classList.contains('delete')) {
+
     ideas[event.target.closest('article').dataset.id].deleteFromStorage();
     delete ideas[event.target.closest('article').dataset.id];
     event.target.closest('article').remove();
@@ -37,20 +40,25 @@ get('body').addEventListener('click', function(event) {
     ideas[id].updateQuality('down');
     event.target.nextElementSibling.nextElementSibling.innerText = ideas[id].quality;
   }
+
   if (event.target.closest('button')){
     sortCards(event)
   }
  });
 
+
 get('section').addEventListener('keypress', function(event){
  if(event.key === 'Enter'){
+
   saveUserEdits(event);
+
  }
 })
 
 window.onload = function(){
   var ideaCount = localStorage.length;
   var parsedObj, tempIdea;
+
   for (var i = 0; i < ideaCount; i++){
     parsedObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
     tempIdea = new Idea(parsedObj.id, parsedObj.title, parsedObj.body, parsedObj.quality);
@@ -58,6 +66,7 @@ window.onload = function(){
     ideas[`${tempID}`]  = tempIdea;
     addCard(tempIdea);
   }
+
   // document.querySelectorAll('.editable').forEach(e => e.addEventListener('blur', e => {
   //   saveUserEdits(e)}));
 }
@@ -68,6 +77,7 @@ function saveUserEdits(event){
   var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
   ideas[id].updateSelf(cardTitle, cardBody);
   event.target.blur();
+
 }
 
 function get(element) {
@@ -93,6 +103,7 @@ function addCard(idea) {
   </div>`;
   // newCard.addEventListener('blur', e => saveUserEdits(e));
   get('section').prepend(newCard);
+
 }
 
 function sortCards(e){
@@ -112,6 +123,7 @@ function sortCards(e){
 });
 
 }
+
 
 
 
