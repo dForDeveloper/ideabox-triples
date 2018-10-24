@@ -1,5 +1,5 @@
 function generateIdeas() {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 10; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     newIdea.saveToStorage();
   }
@@ -101,24 +101,21 @@ function sortCards(e) {
   var clickedButton = e.target;
   var clickedButtonText = e.target.innerText.toLowerCase();
 
-  // if (!cardsToShow.includes(clickedButtonText)) {
-  //   cardsToShow.push(clickedButtonText);
-  // } else {
-  //   cardsToShow = cardsToShow.filter(quality => quality !== clickedButtonText);
-  // }
-  // console.table(cardsToShow);
-
-  //when you click button anything that equals gets shown
-  // when you another button anything that is hidden and doesnt match 
-
-
-  document.querySelectorAll('.quality').forEach(function (span) {
-    if (clickedButtonText === span.innerText) {
+  if (clickedButtonText !== 'show all') {
+    console.log(clickedButtonText);
+    document.querySelectorAll('.quality').forEach(function (span) {
+      if (clickedButtonText === span.innerText) {
+        span.closest('article').classList.remove('hidden');
+      } else {
+        span.closest('article').classList.add('hidden');
+      }
+    });
+  } else {
+    console.log("SHOWING ERRYTHANG");
+    document.querySelectorAll('.quality').forEach(function (span) {
       span.closest('article').classList.remove('hidden');
-    } else {
-      span.closest('article').classList.add('hidden');
-    }
-  });
+    });
+  }
   document.querySelectorAll('button').forEach(function (button) {
     button.disabled = false;
   });
