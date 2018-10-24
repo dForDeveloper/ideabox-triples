@@ -95,14 +95,33 @@ function addCard(idea) {
   get('section').prepend(newCard);
 }
 
+// var cardsToShow = [];
 function sortCards(e) {
   e.preventDefault();
+  var clickedButton = e.target;
+  var clickedButtonText = e.target.innerText.toLowerCase();
+
+  // if (!cardsToShow.includes(clickedButtonText)) {
+  //   cardsToShow.push(clickedButtonText);
+  // } else {
+  //   cardsToShow = cardsToShow.filter(quality => quality !== clickedButtonText);
+  // }
+  // console.table(cardsToShow);
+
+  //when you click button anything that equals gets shown
+  // when you another button anything that is hidden and doesnt match 
+
+
   document.querySelectorAll('.quality').forEach(function (span) {
-    if (span.innerText !== e.target.innerText.toLowerCase() && span.closest('article').classList.value !== 'hidden') {
-      span.closest('article').classList.add('hidden');
-      console.log('hide');
-    } else {
+    if (clickedButtonText === span.innerText) {
       span.closest('article').classList.remove('hidden');
+    } else {
+      span.closest('article').classList.add('hidden');
     }
   });
+  document.querySelectorAll('button').forEach(function (button) {
+    button.disabled = false;
+  });
+
+  clickedButton.disabled = true;
 }
