@@ -1,11 +1,17 @@
 function generateIdeas() {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 550; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
+    if (i % 13 === 0) {
+      newIdea.updateQuality('up');
+    } else if (i % 7) {
+      newIdea.updateQuality('up');
+      newIdea.updateQuality('up');
+    }
     newIdea.saveToStorage();
   }
 }
 
-var ideas = {};
+var ideas = [];
 get('.save').addEventListener('click', function (event) {
   event.preventDefault();
   var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
@@ -63,7 +69,10 @@ window.onload = function () {
     addCard(tempIdea);
   }
 }
-
+// USE BELOW INSTEAD
+// for(var i =0; i < localStorage.length; i++){
+//   a.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+// }
 function saveUserEdits(event) {
   var id = event.target.closest('article').dataset.id
   var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
@@ -133,10 +142,10 @@ function searchCards(event) {
       if (!elem.innerText.includes(event.target.value)) {
         elem.closest('article').classList.add('hidden');
       }
-    }); 
+    });
 
-      
-  }  
+
+  }
   // var search
   // console.log(event);
 }
