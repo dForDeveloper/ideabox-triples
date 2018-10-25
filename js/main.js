@@ -1,5 +1,5 @@
 function generateIdeasArray() {
-  for (var i = 0; i < 550; i++) {
+  for (var i = 0; i < 5550; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
       newIdea.updateQuality('up');
@@ -10,6 +10,7 @@ function generateIdeasArray() {
     newIdea.saveToStorage(ideasArray, true);
   }
 }
+generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
 var ideasArray = [];
@@ -23,12 +24,6 @@ window.onload = function () {
     ideasArray.forEach(eachObj => addCardToDOM(eachObj));
   }
 }
-
-//DELETE IF EVERYTHING WORKS
-// get('.save').addEventListener('click', function (event) {
-//   event.preventDefault();
-
-// });
 
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
@@ -51,13 +46,14 @@ get('body').addEventListener('click', function (event) {
   if (event.target.classList.contains('upvote')) {
     var id = event.target.closest('article').dataset.id;
     var index = returnIndexOfIdeaByID(id);
-    ideasArray[index].updateQuality('up');
+    ideasArray[index].updateQuality('up', ideasArray);
     event.target.nextElementSibling.innerText = ideasArray[index].quality;
   }
 
   if (event.target.classList.contains('downvote')) {
     var id = event.target.closest('article').dataset.id;
     var index = returnIndexOfIdeaByID(id);
+    ideasArray[index].updateQuality('down', ideasArray);
     event.target.nextElementSibling.nextElementSibling.innerText = ideasArray[index].quality;
   }
 
@@ -66,7 +62,11 @@ get('body').addEventListener('click', function (event) {
   }
 
   if (event.target.classList.contains('save')) {
-    var nextId = ideasArray[ideasArray.length - 1].id + 1 || 0;
+    if (ideasArray.length !== 0) {
+      var nextId = ideasArray[ideasArray.length - 1].id + 1
+    } else {
+      var nextId = 0;
+    }
     var title = get('#title-input').value;
     var body = get('#body-input').value;
     var newIdea = new Idea(nextId, title, body);
@@ -83,16 +83,10 @@ get('body').addEventListener('keyup', function (event) {
   searchCards(event);
 })
 
-
-
 function saveUserEdits(id) {
-
-  // console.log(id);
   var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
   var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
   var index = returnIndexOfIdeaByID(id);
-
-  console.log(returnIndexOfIdeaByID(id));
 
   ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
   event.target.blur();
@@ -141,6 +135,7 @@ function sortCards(e) {
       span.closest('article').classList.remove('hidden');
     });
   }
+
   document.querySelectorAll('button').forEach(function (button) {
     button.disabled = false;
   });
@@ -160,26 +155,6 @@ function searchCards(event) {
   }
 }
 
-function returnIdeaByID(id) {
-  return ideasArray.find(obj => obj.id === id);
-}
 function returnIndexOfIdeaByID(inID) {
   return ideasArray.findIndex(obj => obj.id === parseInt(inID));
 }
-function returnCardIdByEvent(event) {
-  return event.target.closest('article').dataset.id;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
