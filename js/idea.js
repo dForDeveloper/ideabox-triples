@@ -8,7 +8,8 @@ class Idea {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.id, JSON.stringify(this));
+    ideas.push(this);
+    localStorage.setItem('ideas', JSON.stringify(ideas));
   }
 
   deleteFromStorage() {
@@ -29,6 +30,7 @@ class Idea {
       this.qualityArray.push(this.qualityArray.shift());
       this.quality = this.qualityArray[0];
     }
-    this.saveToStorage()
+    this.saveToStorage();
+    ideas.indexOf()
   }
 }
