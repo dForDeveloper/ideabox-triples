@@ -1,4 +1,4 @@
-function generateIdeas() {
+function generateIdeasArray() {
   for (var i = 0; i < 550; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
@@ -10,25 +10,28 @@ function generateIdeas() {
     newIdea.saveToStorage();
   }
 }
+//IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
-var ideas = [];
-get('.save').addEventListener('click', function (event) {
-  event.preventDefault();
-  var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
-  var title = get('#title-input').value;
-  var body = get('#body-input').value;
-  var newIdea = new Idea(id, title, body);
-  newIdea.saveToStorage();
-  ideas[`${id}`] = newIdea;
-  addCard(newIdea);
-  clearInput();
-});
+var ideasArray = [];
 
+window.onload = function () {
+  //I could make this one line...but that is probably pushing it, readability wise
+  ideasArray = JSON.parse(localStorage.getItem('ideasArray'));
+  ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
+  ideasArray.forEach(eachObj => addCardToDOM(eachObj));
+}
+
+//DELETE IF EVERYTHING WORKS
+// get('.save').addEventListener('click', function (event) {
+//   event.preventDefault();
+
+// });
+
+//turn all into functions inside this
 get('body').addEventListener('click', function (event) {
   if (event.target.classList.contains('delete')) {
-
-    ideas[event.target.closest('article').dataset.id].deleteFromStorage();
-    delete ideas[event.target.closest('article').dataset.id];
+    ideasArray[event.target.closest('article').dataset.id].deleteFromStorage();
+    delete ideasArray[event.target.closest('article').dataset.id];
     event.target.closest('article').remove();
   }
   if (event.target.closest('article')) {
@@ -36,17 +39,28 @@ get('body').addEventListener('click', function (event) {
   }
   if (event.target.classList.contains('upvote')) {
     var id = event.target.closest('article').dataset.id;
-    ideas[id].updateQuality('up');
-    event.target.nextElementSibling.innerText = ideas[id].quality;
+    ideasArray[id].updateQuality('up');
+    event.target.nextElementSibling.innerText = ideasArray[id].quality;
   }
   if (event.target.classList.contains('downvote')) {
     var id = event.target.closest('article').dataset.id;
-    ideas[id].updateQuality('down');
-    event.target.nextElementSibling.nextElementSibling.innerText = ideas[id].quality;
+    ideasArray[id].updateQuality('down');
+    event.target.nextElementSibling.nextElementSibling.innerText = ideasArray[id].quality;
   }
 
   if (event.target.closest('button')) {
     sortCards(event)
+  }
+
+  if (event.target.classList.contains('save')) {
+    var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
+    var title = get('#title-input').value;
+    var body = get('#body-input').value;
+    var newIdea = new Idea(id, title, body);
+    newIdea.saveToStorage();
+    ideasArray[`${id}`] = newIdea;
+    addCardToDOM(newIdea);
+    clearInput();
   }
 });
 
@@ -57,27 +71,13 @@ get('body').addEventListener('keyup', function (event) {
   searchCards(event);
 })
 
-window.onload = function () {
-  var ideaCount = localStorage.length;
-  var parsedObj, tempIdea;
 
-  for (var i = 0; i < ideaCount; i++) {
-    parsedObj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-    tempIdea = new Idea(parsedObj.id, parsedObj.title, parsedObj.body, parsedObj.quality);
-    var tempID = tempIdea.id;
-    ideas[`${tempID}`] = tempIdea;
-    addCard(tempIdea);
-  }
-}
-// USE BELOW INSTEAD
-// for(var i =0; i < localStorage.length; i++){
-//   a.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-// }
+
 function saveUserEdits(event) {
   var id = event.target.closest('article').dataset.id
   var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
   var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
-  ideas[id].updateSelf(cardTitle, cardBody);
+  ideasArray[id].updateSelf(cardTitle, cardBody);
   event.target.blur();
 }
 
@@ -90,7 +90,7 @@ function clearInput() {
   get('#body-input').value = null;
 }
 
-function addCard(idea) {
+function addCardToDOM(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
   newCard.innerHTML =
@@ -105,7 +105,6 @@ function addCard(idea) {
   get('section').prepend(newCard);
 }
 
-// var cardsToShow = [];
 function sortCards(e) {
   e.preventDefault();
   var clickedButton = e.target;
@@ -121,7 +120,6 @@ function sortCards(e) {
       }
     });
   } else {
-    console.log("SHOWING ERRYTHANG");
     document.querySelectorAll('.quality').forEach(function (span) {
       span.closest('article').classList.remove('hidden');
     });
@@ -133,7 +131,6 @@ function sortCards(e) {
   clickedButton.disabled = true;
 }
 
-
 function searchCards(event) {
   get('.unfilter-button').disabled = false;
   get('.unfilter-button').click();
@@ -143,11 +140,14 @@ function searchCards(event) {
         elem.closest('article').classList.add('hidden');
       }
     });
-
-
   }
-  // var search
-  // console.log(event);
+}
+
+function findIdeaByID(id) {
+  return ideasArray.find(obj => obj.id === id);
+}
+function returnIndexOfID(id) {
+  return ideasArray.findIndex(obj => obj.id === id);
 }
 
 
