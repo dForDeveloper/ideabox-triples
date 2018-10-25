@@ -7,8 +7,7 @@ function generateIdeasArray() {
       newIdea.updateQuality('up');
       newIdea.updateQuality('up');
     }
-    ideasArray.push(newIdea);
-    newIdea.saveToStorage(ideasArray);
+    newIdea.saveToStorage(ideasArray, true);
   }
 }
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
@@ -33,46 +32,45 @@ window.onload = function () {
 
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
-
-  var id = event.target.closest('article').dataset.id;
-  var index = returnIndexOfIdeaByID(id);
-
+  event.preventDefault();
   if (event.target.classList.contains('delete')) {
+    var id = event.target.closest('article').dataset.id;
+    var index = returnIndexOfIdeaByID(id);
     //delete from local storage and data model
     ideasArray[index].deleteFromStorage(index, ideasArray);
     //delete from dom
     event.target.closest('article').remove();
-
-    // ideasArray[event.target.closest('article').dataset.id].deleteFromStorage();
-    // delete ideasArray[event.target.closest('article').dataset.id];
-    // event.target.closest('article').remove();
   }
 
+  //need to relook at this logic
   if (event.target.closest('article')) {
-    event.target.onblur = event => saveUserEdits(event);
+    var id = event.target.closest('article').dataset.id;
+    event.target.onblur = event => saveUserEdits(id);
   }
+
   if (event.target.classList.contains('upvote')) {
     var id = event.target.closest('article').dataset.id;
-    ideasArray[id].updateQuality('up');
-    event.target.nextElementSibling.innerText = ideasArray[id].quality;
+    var index = returnIndexOfIdeaByID(id);
+    ideasArray[index].updateQuality('up');
+    event.target.nextElementSibling.innerText = ideasArray[index].quality;
   }
+
   if (event.target.classList.contains('downvote')) {
     var id = event.target.closest('article').dataset.id;
-    ideasArray[id].updateQuality('down');
-    event.target.nextElementSibling.nextElementSibling.innerText = ideasArray[id].quality;
+    var index = returnIndexOfIdeaByID(id);
+    event.target.nextElementSibling.nextElementSibling.innerText = ideasArray[index].quality;
   }
 
   if (event.target.closest('button')) {
-    sortCards(event)
+    sortCards(event);
   }
 
   if (event.target.classList.contains('save')) {
-    var id = parseInt(localStorage.key(localStorage.length - 1)) + 1;
+    var nextId = ideasArray[ideasArray.length - 1].id + 1 || 0;
     var title = get('#title-input').value;
     var body = get('#body-input').value;
-    var newIdea = new Idea(id, title, body);
-    newIdea.saveToStorage();
-    ideasArray[`${id}`] = newIdea;
+    var newIdea = new Idea(nextId, title, body);
+    newIdea.saveToStorage(ideasArray, true);
     addCardToDOM(newIdea);
     clearInput();
   }
@@ -87,11 +85,14 @@ get('body').addEventListener('keyup', function (event) {
 
 
 
-function saveUserEdits(event) {
-  var id = event.target.closest('article').dataset.id;
+function saveUserEdits(id) {
+
+  // console.log(id);
   var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
   var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
-  var index = indexOfCardFromEvent(event);
+  var index = returnIndexOfIdeaByID(id);
+
+  console.log(returnIndexOfIdeaByID(id));
 
   ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
   event.target.blur();
@@ -162,8 +163,8 @@ function searchCards(event) {
 function returnIdeaByID(id) {
   return ideasArray.find(obj => obj.id === id);
 }
-function returnIndexOfIdeaByID(id) {
-  return ideasArray.findIndex(obj => obj.id === id);
+function returnIndexOfIdeaByID(inID) {
+  return ideasArray.findIndex(obj => obj.id === parseInt(inID));
 }
 function returnCardIdByEvent(event) {
   return event.target.closest('article').dataset.id;
