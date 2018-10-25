@@ -7,21 +7,26 @@ class Idea {
     this.quality = inQuality || this.qualityArray[0];
   }
 
-  saveToStorage() {
-    localStorage.setItem(this.id, JSON.stringify(this));
+  saveToStorage(ideasArray, isNewCard) {
+    if (isNewCard) {
+      ideasArray.push(this);
+    }
+    localStorage.setItem('ideas', JSON.stringify(ideasArray));
   }
 
-  deleteFromStorage() {
-    localStorage.removeItem(this.id);
+  deleteFromStorage(index, ideasArray) {
+    ideasArray.splice(index, 1);
+    this.saveToStorage(ideasArray);
   }
 
-  updateSelf(inTitle, inBody) {
+  updateSelf(inTitle, inBody, ideasArray, index) {
     this.title = inTitle;
     this.body = inBody;
-    this.saveToStorage();
+    ideasArray.splice(index, 1, this)
+    this.saveToStorage(ideasArray);
   }
 
-  updateQuality(direction) {
+  updateQuality(direction, ideasArray) {
     if (direction === 'up' && this.qualityArray[0] !== 'genius') {
       this.qualityArray.unshift(this.qualityArray.pop());
       this.quality = this.qualityArray[0];
@@ -29,6 +34,6 @@ class Idea {
       this.qualityArray.push(this.qualityArray.shift());
       this.quality = this.qualityArray[0];
     }
-    this.saveToStorage()
+    this.saveToStorage(ideasArray);
   }
 }
