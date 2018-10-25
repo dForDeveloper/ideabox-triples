@@ -1,7 +1,7 @@
 var ideasArray = [];
 
 function generateIdeasArray() {
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 5000; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
       newIdea.updateQuality('up');
@@ -13,7 +13,7 @@ function generateIdeasArray() {
     newIdea.saveToStorage(ideasArray, true);
   }
 }
-// generateIdeasArray();
+generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
 
