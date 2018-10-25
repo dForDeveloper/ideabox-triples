@@ -1,5 +1,7 @@
+var ideasArray = [];
+
 function generateIdeasArray() {
-  for (var i = 0; i < 5550; i++) {
+  for (var i = 0; i < 50; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
       newIdea.updateQuality('up');
@@ -7,13 +9,14 @@ function generateIdeasArray() {
       newIdea.updateQuality('up');
       newIdea.updateQuality('up');
     }
+    // ideasArray.push(newIdea);
     newIdea.saveToStorage(ideasArray, true);
   }
 }
-generateIdeasArray();
+// generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
-var ideasArray = [];
+
 
 window.onload = function () {
   //I could make this one line...but that is probably pushing it, readability wise
