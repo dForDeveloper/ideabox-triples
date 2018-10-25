@@ -7,19 +7,20 @@ class Idea {
     this.quality = inQuality || this.qualityArray[0];
   }
 
-  saveToStorage() {
-    ideas.push(this);
-    localStorage.setItem('ideas', JSON.stringify(ideas));
+  saveToStorage(ideasArray) {
+    localStorage.setItem('ideas', JSON.stringify(ideasArray));
   }
 
-  deleteFromStorage() {
-    localStorage.removeItem(this.id);
+  deleteFromStorage(index, ideasArray) {
+    ideasArray.splice(index, 1);
+    this.saveToStorage(ideasArray);
   }
 
-  updateSelf(inTitle, inBody) {
+  updateSelf(inTitle, inBody, ideasArray, index) {
     this.title = inTitle;
     this.body = inBody;
-    this.saveToStorage();
+    ideasArray.splice(index, 1, this)
+    this.saveToStorage(ideasArray);
   }
 
   updateQuality(direction) {
@@ -30,7 +31,6 @@ class Idea {
       this.qualityArray.push(this.qualityArray.shift());
       this.quality = this.qualityArray[0];
     }
-    this.saveToStorage();
-    ideas.indexOf()
+    this.saveToStorage(ideasArray);
   }
 }
