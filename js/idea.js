@@ -7,7 +7,10 @@ class Idea {
     this.quality = inQuality || this.qualityArray[0];
   }
 
-  saveToStorage(ideasArray) {
+  saveToStorage(ideasArray, isNewCard) {
+    if (isNewCard) {
+      ideasArray.push(this);
+    }
     localStorage.setItem('ideas', JSON.stringify(ideasArray));
   }
 
@@ -23,7 +26,7 @@ class Idea {
     this.saveToStorage(ideasArray);
   }
 
-  updateQuality(direction) {
+  updateQuality(direction, ideasArray) {
     if (direction === 'up' && this.qualityArray[0] !== 'genius') {
       this.qualityArray.unshift(this.qualityArray.pop());
       this.quality = this.qualityArray[0];
