@@ -7,7 +7,8 @@ function generateIdeasArray() {
       newIdea.updateQuality('up');
       newIdea.updateQuality('up');
     }
-    newIdea.saveToStorage();
+    ideasArray.push(newIdea);
+    newIdea.saveToStorage(ideasArray);
   }
 }
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
@@ -16,9 +17,12 @@ var ideasArray = [];
 
 window.onload = function () {
   //I could make this one line...but that is probably pushing it, readability wise
-  ideasArray = JSON.parse(localStorage.getItem('ideasArray'));
-  ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
-  ideasArray.forEach(eachObj => addCardToDOM(eachObj));
+  //Can be function
+  if (localStorage.getItem('ideas')) {
+    ideasArray = JSON.parse(localStorage.getItem('ideas'));
+    ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
+    ideasArray.forEach(eachObj => addCardToDOM(eachObj));
+  }
 }
 
 //DELETE IF EVERYTHING WORKS
@@ -29,11 +33,21 @@ window.onload = function () {
 
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
+
+  var id = event.target.closest('article').dataset.id;
+  var index = returnIndexOfIdeaByID(id);
+
   if (event.target.classList.contains('delete')) {
-    ideasArray[event.target.closest('article').dataset.id].deleteFromStorage();
-    delete ideasArray[event.target.closest('article').dataset.id];
+    //delete from local storage and data model
+    ideasArray[index].deleteFromStorage(index, ideasArray);
+    //delete from dom
     event.target.closest('article').remove();
+
+    // ideasArray[event.target.closest('article').dataset.id].deleteFromStorage();
+    // delete ideasArray[event.target.closest('article').dataset.id];
+    // event.target.closest('article').remove();
   }
+
   if (event.target.closest('article')) {
     event.target.onblur = event => saveUserEdits(event);
   }
@@ -74,10 +88,12 @@ get('body').addEventListener('keyup', function (event) {
 
 
 function saveUserEdits(event) {
-  var id = event.target.closest('article').dataset.id
+  var id = event.target.closest('article').dataset.id;
   var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
   var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
-  ideasArray[id].updateSelf(cardTitle, cardBody);
+  var index = indexOfCardFromEvent(event);
+
+  ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
   event.target.blur();
 }
 
@@ -143,11 +159,14 @@ function searchCards(event) {
   }
 }
 
-function findIdeaByID(id) {
+function returnIdeaByID(id) {
   return ideasArray.find(obj => obj.id === id);
 }
-function returnIndexOfID(id) {
+function returnIndexOfIdeaByID(id) {
   return ideasArray.findIndex(obj => obj.id === id);
+}
+function returnCardIdByEvent(event) {
+  return event.target.closest('article').dataset.id;
 }
 
 
