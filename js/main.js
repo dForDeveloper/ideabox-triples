@@ -1,7 +1,7 @@
 var ideasArray = [];
 
 function generateIdeasArray() {
-  for (var i = 0; i < 5000; i++) {
+  for (var i = 0; i < 50; i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
       newIdea.updateQuality('up');
@@ -9,28 +9,34 @@ function generateIdeasArray() {
       newIdea.updateQuality('up');
       newIdea.updateQuality('up');
     }
-    // ideasArray.push(newIdea);
-    newIdea.saveToStorage(ideasArray, true);
+    ideasArray.push(newIdea);
   }
+    newIdea.saveToStorage(ideasArray);
 }
-generateIdeasArray();
+// generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
 
 
 window.onload = function () {
-  //I could make this one line...but that is probably pushing it, readability wise
-  //Can be function
   if (localStorage.getItem('ideas')) {
     ideasArray = JSON.parse(localStorage.getItem('ideas'));
+    let topTenIdeas = ideasArray.filter((idea,index)=>{
+      return index >= ideasArray.length -10;
+    })
+    topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+
+    // for (var i = 0; i <10; i++){
+    //   addCardToDOM(ideasArray[i])
+    // }
     ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
-    ideasArray.forEach(eachObj => addCardToDOM(eachObj));
   }
 }
 
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
   event.preventDefault();
+  
   if (event.target.classList.contains('delete')) {
     var id = event.target.closest('article').dataset.id;
     var index = returnIndexOfIdeaByID(id);
