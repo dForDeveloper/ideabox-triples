@@ -25,10 +25,6 @@ window.onload = function () {
       return index >= ideasArray.length -10;
     })
     topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-
-    // for (var i = 0; i <10; i++){
-    //   addCardToDOM(ideasArray[i])
-    // }
     ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
   }
 }
@@ -36,6 +32,23 @@ window.onload = function () {
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
   event.preventDefault();
+
+  if(event.target.classList.contains('show-more-button')) {
+    event.target.classList.remove('show-more-button');
+    event.target.classList.add('show-less-button');
+    event.target.innerText = 'Show less';
+    get('.card-area').innerHTML = '';
+    ideasArray.forEach(eachObj => addCardToDOM(eachObj));
+  } else if (event.target.classList.contains('show-less-button')) {
+    event.target.classList.remove('show-less-button');
+    event.target.classList.add('show-more-button');
+    event.target.innerText = 'Show more';
+    get('.card-area').innerHTML = '';
+    let topTenIdeas = ideasArray.filter((idea,index)=>{
+      return index >= ideasArray.length -10;
+    })
+    topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+  }
   
   if (event.target.classList.contains('delete')) {
     var id = event.target.closest('article').dataset.id;
@@ -66,7 +79,7 @@ get('body').addEventListener('click', function (event) {
     event.target.nextElementSibling.nextElementSibling.innerText = ideasArray[index].quality;
   }
 
-  if (event.target.closest('button')) {
+  if (event.target.closest('.filter-quality')) {
     sortCards(event);
   }
 
