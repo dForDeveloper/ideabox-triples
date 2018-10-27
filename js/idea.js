@@ -3,7 +3,7 @@ class Idea {
     this.id = inId;
     this.title = inTitle;
     this.body = inBody;
-    this.qualityArray = ['swill', 'genius', 'plausible'];
+    this.qualityArray = ['Swill', 'Genius', 'Plausible'];
     this.quality = inQuality || this.qualityArray[0];
   }
 
@@ -27,10 +27,10 @@ class Idea {
   }
 
   updateQuality(direction, ideasArray) {
-    if (direction === 'up' && this.qualityArray[0] !== 'genius') {
+    if (direction === 'up' && this.qualityArray[0] !== 'Genius') {
       this.qualityArray.unshift(this.qualityArray.pop());
       this.quality = this.qualityArray[0];
-    } else if (direction === 'down' && this.qualityArray[0] !== 'swill') {
+    } else if (direction === 'down' && this.qualityArray[0] !== 'Swill') {
       this.qualityArray.push(this.qualityArray.shift());
       this.quality = this.qualityArray[0];
     }
