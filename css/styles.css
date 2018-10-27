@@ -173,6 +173,14 @@ button:disabled {
   width: 27px;
 }
 
+.show-more-button::before {
+  content: "Show More";
+}
+
+.show-less-button::before {
+  content: "Show Less";
+}
+
 .hidden {
   display: none;
 }
