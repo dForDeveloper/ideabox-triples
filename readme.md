@@ -1,1 +1,1 @@
-[APP Link](https://justind85.github.io/ideabox-triples/)
+[APP Link](https://dfordeveloper.github.io/ideabox-triples/)
