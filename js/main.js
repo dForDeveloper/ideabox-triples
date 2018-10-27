@@ -68,15 +68,17 @@ get('body').addEventListener('click', function (event) {
   if (event.target.classList.contains('upvote')) {
     var id = event.target.closest('article').dataset.id;
     var index = returnIndexOfIdeaByID(id);
-    ideasArray[index].updateQuality('up', ideasArray);
-    event.target.nextElementSibling.innerText = `Quality: ${ideasArray[index].quality}`;
+    let qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
+    let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+    event.target.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
   }
 
   if (event.target.classList.contains('downvote')) {
     var id = event.target.closest('article').dataset.id;
     var index = returnIndexOfIdeaByID(id);
-    ideasArray[index].updateQuality('down', ideasArray);
-    event.target.nextElementSibling.nextElementSibling.innerText = `Quality: ${ideasArray[index].quality}`;
+    let qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
+    let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+    event.target.nextElementSibling.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
   }
 
   if (event.target.closest('.filter-quality')) {
@@ -99,8 +101,8 @@ get('body').addEventListener('click', function (event) {
 });
 
 get('body').addEventListener('keyup', function (event) {
-  if (event.key === 'Enter') {
-    saveUserEdits(event);
+  if (event.key === 'Enter' && event.target.closest('article') !== null) {
+    saveUserEdits(event.target.closest('article').dataset.id);
   }
   searchCards(event);
 })
@@ -125,6 +127,7 @@ function clearInput() {
 
 function addCardToDOM(idea) {
   var newCard = document.createElement('article');
+  let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
   newCard.dataset.id = idea.id;
   newCard.classList.add('card');
   newCard.innerHTML =
@@ -139,7 +142,7 @@ function addCardToDOM(idea) {
   <div class="card-footer">
     <img src="images/downvote.svg" alt="downvote" class="downvote svg">
     <img src="images/upvote.svg" alt="upvote" class="upvote svg">
-    <p>Quality: <span class="quality">${idea.quality}</span></p>
+    <span class="quality">${qualityArray[idea.quality]}</span>
     <img src="images/delete.svg" alt="delete" class="delete svg">
   </div>`;
   get('.card-area').prepend(newCard);
@@ -148,11 +151,13 @@ function addCardToDOM(idea) {
 function sortCards(e) {
   e.preventDefault();
   var clickedButton = e.target;
-  var clickedButtonText = e.target.innerText.toLowerCase();
-
-  if (clickedButtonText !== 'all qualities') {
+  var clickedButtonQuality = e.target.dataset.quality;
+  let id, index;
+  if (clickedButtonQuality !== 'all qualities') {
     document.querySelectorAll('.quality').forEach(function (span) {
-      if (clickedButtonText === span.innerText) {
+      id = span.closest('article').dataset.id;
+      index = returnIndexOfIdeaByID(id);
+      if (parseInt(clickedButtonQuality) === ideasArray[index].quality) {
         span.closest('article').classList.remove('hidden');
       } else {
         span.closest('article').classList.add('hidden');
@@ -172,9 +177,9 @@ function sortCards(e) {
 }
 
 function searchCards(event) {
-  get('.unfilter-button').disabled = false;
-  get('.unfilter-button').click();
   if (event.target.id === 'search') {
+    get('.unfilter-button').disabled = false;
+    get('.unfilter-button').click();
     document.querySelectorAll('.searchable').forEach(elem => {
       if (!elem.innerText.includes(event.target.value)) {
         elem.closest('article').classList.add('hidden');
