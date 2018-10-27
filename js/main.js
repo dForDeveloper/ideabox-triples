@@ -51,33 +51,33 @@ get('body').addEventListener('click', function (event) {
   }
   
   if (event.target.classList.contains('delete')) {
-    var id = event.target.closest('article').dataset.id;
+    var id = event.target.closest('.card').dataset.id;
     var index = returnIndexOfIdeaByID(id);
     //delete from local storage and data model
     ideasArray[index].deleteFromStorage(index, ideasArray);
     //delete from dom
-    event.target.closest('article').remove();
+    event.target.closest('.card').remove();
   }
 
   //need to relook at this logic
-  if (event.target.closest('article')) {
-    var id = event.target.closest('article').dataset.id;
+  if (event.target.closest('.card')) {
+    var id = event.target.closest('.card').dataset.id;
     event.target.onblur = event => saveUserEdits(id);
   }
 
   if (event.target.classList.contains('upvote')) {
-    var id = event.target.closest('article').dataset.id;
-    var index = returnIndexOfIdeaByID(id);
-    let qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
-    let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+    const id = event.target.closest('.card').dataset.id;
+    const index = returnIndexOfIdeaByID(id);
+    const qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
+    const qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
     event.target.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
   }
 
   if (event.target.classList.contains('downvote')) {
-    var id = event.target.closest('article').dataset.id;
-    var index = returnIndexOfIdeaByID(id);
-    let qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
-    let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+    const id = event.target.closest('.card').dataset.id;
+    const index = returnIndexOfIdeaByID(id);
+    const qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
+    const qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
     event.target.nextElementSibling.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
   }
 
@@ -101,17 +101,16 @@ get('body').addEventListener('click', function (event) {
 });
 
 get('body').addEventListener('keyup', function (event) {
-  if (event.key === 'Enter' && event.target.closest('article') !== null) {
-    saveUserEdits(event.target.closest('article').dataset.id);
+  if (event.key === 'Enter' && event.target.closest('.card') !== null) {
+    saveUserEdits(event.target.closest('.card').dataset.id);
   }
   searchCards(event);
 })
 
 function saveUserEdits(id) {
-  var cardTitle = get(`article[data-id='${id}'] .card-title`).innerText;
-  var cardBody = get(`article[data-id='${id}'] .card-body`).innerText;
+  var cardTitle = get(`.card[data-id='${id}'] .card-title`).innerText;
+  var cardBody = get(`.card[data-id='${id}'] .card-body`).innerText;
   var index = returnIndexOfIdeaByID(id);
-
   ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
   event.target.blur();
 }
@@ -155,17 +154,17 @@ function sortCards(e) {
   let id, index;
   if (clickedButtonQuality !== 'all qualities') {
     document.querySelectorAll('.quality').forEach(function (span) {
-      id = span.closest('article').dataset.id;
+      id = span.closest('.card').dataset.id;
       index = returnIndexOfIdeaByID(id);
       if (parseInt(clickedButtonQuality) === ideasArray[index].quality) {
-        span.closest('article').classList.remove('hidden');
+        span.closest('.card').classList.remove('hidden');
       } else {
-        span.closest('article').classList.add('hidden');
+        span.closest('.card').classList.add('hidden');
       }
     });
   } else {
     document.querySelectorAll('.quality').forEach(function (span) {
-      span.closest('article').classList.remove('hidden');
+      span.closest('.card').classList.remove('hidden');
     });
   }
 
@@ -182,7 +181,7 @@ function searchCards(event) {
     get('.unfilter-button').click();
     document.querySelectorAll('.searchable').forEach(elem => {
       if (!elem.innerText.includes(event.target.value)) {
-        elem.closest('article').classList.add('hidden');
+        elem.closest('.card').classList.add('hidden');
       }
     });
   }
