@@ -80,9 +80,35 @@ label {
   height: 40px;
 }
 
+.filter-buttons {
+  display: grid;
+  grid-column-gap: 2%;
+  grid-row-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 20px auto 0;
+  max-width: 700px;
+  width: 80%
+}
+
+.filter-buttons button {
+  background-color: #5f5b6c;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  height: 30px;
+}
+
+.unfilter-button {
+  grid-column: 1/4;
+  width: 50%;
+  margin: auto;
+}
 
 button:disabled {
-  background-color: peru;
+  background-color: #b2a4d0;
+  box-shadow: 0 0 3px #5f5b6c;
 }
 
 .card-area {
@@ -91,11 +117,13 @@ button:disabled {
 
 .card {
   border:solid 1px #D2CCCD;
+  border-radius: 5px;
   color: #5f5b6c;
   height: 180px;
   margin:auto;
   margin-top: 23px;
   max-width: 700px;
+  width: 80%;
 }
 
 .card-title {

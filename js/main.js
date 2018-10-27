@@ -126,6 +126,7 @@ function clearInput() {
 function addCardToDOM(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
+  newCard.classList.add('card');
   newCard.innerHTML =
   `<span class="searchable">
     <h2 class="card-title editable" contenteditable="true">
@@ -141,7 +142,7 @@ function addCardToDOM(idea) {
     Quality: <span class="quality">${idea.quality}</span>
     <img src="images/delete.svg" alt="delete" class="delete svg">
   </div>`;
-  get('section').prepend(newCard);
+  get('.card-area').prepend(newCard);
 }
 
 function sortCards(e) {
@@ -149,7 +150,7 @@ function sortCards(e) {
   var clickedButton = e.target;
   var clickedButtonText = e.target.innerText.toLowerCase();
 
-  if (clickedButtonText !== 'unfilter') {
+  if (clickedButtonText !== 'all qualities') {
     console.log(clickedButtonText);
     document.querySelectorAll('.quality').forEach(function (span) {
       if (clickedButtonText === span.innerText) {
