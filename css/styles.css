@@ -1,39 +1,82 @@
 * {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
-  padding:0;
   margin: 0;
+  padding:0;
 }
 
-button:disabled{
-  background-color: peru;
-}
 header {
-  background-color: rgb(49,42,48);
+  background-color: #342a31;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 25px;
 }
 
 h1 {
-  color: #B2A1B1;
+  color: #b2a4d0;
   font-size: 45px;
-  margin:0;
-  margin-left: 15px;
+  font-weight: 800;
+  margin: 0;
 }
 
-.triples-text {
-  color: white;
+h1:after {
+  color: #ffffff;
+  content: 'triples';
 }
 
 #search {
-  height: 32px;
+  border: none;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
   font-size: 20px;
   font-weight: 100;
+  height: 32px;
   margin-top: 9px;
-  padding-left: 5px;
+  padding-left: 8px;
   width: 230px;
 }
+
+.search-icon {
+  background-color: #aeaab7;
+  border: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: #ffffff;
+  font-size: 20px;
+  height: 32px;
+  margin-left: -4px;
+  padding: 0 8px;
+}
+
+main {
+  background-color: #ecf2f2;
+}
+
+form {
+  margin: auto;
+  max-width: 700px;
+  width: 80%;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+  font-weight: 100;
+  padding-bottom: 5px;
+}
+
+.title-label {
+  padding-top: 20px;
+}
+
+#title-input,
+#body-input,
+.save {
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+ }
 
 #title-input {
   height: 40px;
@@ -44,92 +87,114 @@ h1 {
 }
 
 .save { 
-  background-color:#6E646B;
+  background-color: #5f5b6c;
   color: white;
   font-size: 21px;
-  font-weight: 700;
+  font-weight: 800;
   height: 40px;
 }
 
-main {
-  background-color: #EAEAEA;
-  width: 100%;
+.filter-buttons,
+.show-more-or-less {
+  display: grid;
+  grid-column-gap: 2%;
+  grid-row-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 20px auto 0;
+  max-width: 700px;
+  width: 80%
 }
 
-label, textarea {
-  display: block;
+.filter-buttons button,
+.show-more-button,
+.show-less-button {
+  background-color: #5f5b6c;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  height: 30px;
 }
 
-label {
-  font-size: 20px;
-  font-weight: 100;
-  padding-bottom: 5px;
+.unfilter-button,
+.show-more-button,
+.show-less-button {
+  grid-column: 1/4;
+  margin: 0 auto 20px;
+  width: 50%;
 }
 
-form {
+button:disabled {
+  background-color: #b2a4d0;
+  box-shadow: 0 0 3px #5f5b6c;
+}
+
+.card {
+  border: solid 1px #D2CCCD;
+  border-radius: 5px;
+  color: #5f5b6c;
+  display: grid;
+  grid-template-rows: 1fr 45px;
+  min-height: 180px;
   margin: auto;
+  margin-top: 23px;
   max-width: 700px;
   width: 80%;
 }
 
-#title-input,
-textarea,
-input[type='submit'] {
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  width: 100%;
- }
-
- .title-text {
-  padding-top: 20px;
- }
-
- img {
-  width: 27px;
- }
-
-article {
-  border:solid 1px #D2CCCD;
-  max-width: 700px;
-  margin:auto;
-  height: 180px;
-  margin-top: 23px;
-
-  color: #6E646B;
-}
-
-.card-area {
-  width:100%;
-  /* color: #FFFFFF; */
+.searchable {
+  padding: 20px;
 }
 
 .card-title {
-  /* color: #6E646B; */
-  padding:20px; 
-  font-weight: bold;
+  font-weight: 800;
+  /*padding:20px; */
 }
 
 .card-body {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 25px;
   font-weight: 100;
-  /* color: #7C7879; */
+  padding: 20px 0;
+  /*padding-left: 20px;*/
+  /*padding-right: 20px;*/
 }
 
-.idea-footer{
-  padding-left: 15px;
-  padding-top: 10px;
+.card-footer {
+  align-items: center;
   border-top: solid 1px #D2CCCD;
+  display: grid;
+  font-weight: 800;
+  grid-column-gap: 10px;
+  grid-template-columns: 30px 30px 1fr 30px;
+  padding: 5px 10px;
 }
 
-.delete{
-  float: right;
-  margin-right: 12px;
+.svg {
+  width: 27px;
 }
 
 .hidden {
   display: none;
 }
 
+@media screen and (max-width: 700px) {
+  header {
+    display: grid;
+    justify-content: center;
+  }
+
+  #search {
+    width: 269px;
+  }
+
+  .search-icon {
+    margin: -5px;
+  }
+
+  form,
+  .filter-buttons,
+  .card,
+  .show-more-or-less {
+    width: 95%;
+  }
+}

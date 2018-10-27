@@ -3,8 +3,7 @@ class Idea {
     this.id = inId;
     this.title = inTitle;
     this.body = inBody;
-    this.qualityArray = ['swill', 'genius', 'plausible'];
-    this.quality = inQuality || this.qualityArray[0];
+    this.quality = inQuality || 0;
   }
 
   saveToStorage(ideasArray, isNewCard) {
@@ -27,13 +26,12 @@ class Idea {
   }
 
   updateQuality(direction, ideasArray) {
-    if (direction === 'up' && this.qualityArray[0] !== 'genius') {
-      this.qualityArray.unshift(this.qualityArray.pop());
-      this.quality = this.qualityArray[0];
-    } else if (direction === 'down' && this.qualityArray[0] !== 'swill') {
-      this.qualityArray.push(this.qualityArray.shift());
-      this.quality = this.qualityArray[0];
+    if (direction === 'up' && this.quality !== 2) {
+      this.quality++;
+    } else if (direction === 'down' && this.quality !== 0) {
+      this.quality--;
     }
     this.saveToStorage(ideasArray);
+    return this.quality;
   }
 }
