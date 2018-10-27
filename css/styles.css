@@ -80,7 +80,8 @@ label {
   height: 40px;
 }
 
-.filter-buttons {
+.filter-buttons,
+.show-more-or-less {
   display: grid;
   grid-column-gap: 2%;
   grid-row-gap: 10px;
@@ -90,7 +91,9 @@ label {
   width: 80%
 }
 
-.filter-buttons button {
+.filter-buttons button,
+.show-more-button,
+.show-less-button {
   background-color: #5f5b6c;
   border: none;
   border-radius: 5px;
@@ -100,10 +103,12 @@ label {
   height: 30px;
 }
 
-.unfilter-button {
+.unfilter-button,
+.show-more-button,
+.show-less-button {
   grid-column: 1/4;
+  margin: 0 auto 20px;
   width: 50%;
-  margin: auto;
 }
 
 button:disabled {
@@ -152,6 +157,25 @@ button:disabled {
   float: right;
   margin-right: 12px;
 }
+
+/*.show-more-or-less {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: auto;
+  max-width: 700px;
+  width: 80%
+}
+
+.show-more-button {
+  background-color: #5f5b6c;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  height: 30px;
+  width: 50%;
+}*/
 
 .hidden {
   display: none;

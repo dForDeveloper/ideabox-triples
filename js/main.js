@@ -36,13 +36,13 @@ get('body').addEventListener('click', function (event) {
   if(event.target.classList.contains('show-more-button')) {
     event.target.classList.remove('show-more-button');
     event.target.classList.add('show-less-button');
-    event.target.innerText = 'Show less';
+    event.target.innerText = 'Show Less';
     get('.card-area').innerHTML = '';
     ideasArray.forEach(eachObj => addCardToDOM(eachObj));
   } else if (event.target.classList.contains('show-less-button')) {
     event.target.classList.remove('show-less-button');
     event.target.classList.add('show-more-button');
-    event.target.innerText = 'Show more';
+    event.target.innerText = 'Show More';
     get('.card-area').innerHTML = '';
     let topTenIdeas = ideasArray.filter((idea,index)=>{
       return index >= ideasArray.length -10;
