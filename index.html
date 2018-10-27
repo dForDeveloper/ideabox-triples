@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <title>ideabox</title>
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href=“https://fonts.googleapis.com/css?family=Open+Sans:300,800” rel=“stylesheet”>
+    <link rel=“stylesheet” href=“https://fonts.googleapis.com/css?family=Open+Sans:300,800”>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
       crossorigin="anonymous">
   </head>
-
   <body>
     <header>
       <h1 class="ideabox-header">ideabox<span class="triples-text">triples</span></h1>
@@ -27,20 +25,19 @@
         <textarea id="body-input"></textarea>
         <input type="submit" class="save" value="Save">
       </form>
-      <div class="filter-buttons">
-        <button class="unfilter-button filter-quality">Unfilter</button>
-        <button class="swill-button filter-quality">Swill</button>
-        <button class="plausible-button filter-quality">Plausible</button>
-        <button class="genius-button filter-quality">Genius</button>
-      </div>
       <div>
         <button class="show-more-button">Show More</button>
       </div>
     </main>
+    <section class="filter-buttons">
+      <button class="unfilter-button filter-quality">Unfilter</button>
+      <button class="swill-button filter-quality">Swill</button>
+      <button class="plausible-button filter-quality">Plausible</button>
+      <button class="genius-button filter-quality">Genius</button>
+    </section>
     <section class="card-area">
     </section>
     <script type="text/javascript" src="js/idea.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
-
 </html>
