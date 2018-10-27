@@ -1,7 +1,7 @@
 var ideasArray = [];
 
-function generateIdeasArray() {
-  for (var i = 0; i < 50; i++) {
+function generateIdeasArray(num) {
+  for (var i = 0; i < (num || 50); i++) {
     var newIdea = new Idea(i, `title ${i}`, `body ${i}`);
     if (i % 13 === 0) {
       newIdea.updateQuality('up');
@@ -11,7 +11,7 @@ function generateIdeasArray() {
     }
     ideasArray.push(newIdea);
   }
-    newIdea.saveToStorage(ideasArray);
+  newIdea.saveToStorage(ideasArray);
 }
 // generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
@@ -21,35 +21,38 @@ function generateIdeasArray() {
 window.onload = function () {
   if (localStorage.getItem('ideas')) {
     ideasArray = JSON.parse(localStorage.getItem('ideas'));
-    let topTenIdeas = ideasArray.filter((idea,index)=>{
-      return index >= ideasArray.length -10;
+    let topTenIdeas = ideasArray.filter((idea, index) => {
+      return index >= ideasArray.length - 10;
     })
     topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
     ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
   }
 }
 
+function showAll() {
+  ideasArray.forEach(e => addCardToDOM(e));
+  return 'Show Less';
+}
+function showLess() {
+  const topTenIdeas = ideasArray.filter((idea, index) => {
+    return index >= ideasArray.length - 10;
+  })
+  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+  return 'Show More';
+}
+function showMore(e) {
+  const showMoreButton = e.target;
+  get('.card-area').innerHTML = '';
+  showMoreButton.innerText = showMoreButton.innerText === 'Show More' ? showAll() : showLess();
+  return (true);
+}
+
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
   event.preventDefault();
+  console.log(event.target.closest('.show-more-or-less') ? showMore(event) : 'do nothing');
 
-  if(event.target.classList.contains('show-more-button')) {
-    event.target.classList.remove('show-more-button');
-    event.target.classList.add('show-less-button');
-    event.target.innerText = 'Show Less';
-    get('.card-area').innerHTML = '';
-    ideasArray.forEach(eachObj => addCardToDOM(eachObj));
-  } else if (event.target.classList.contains('show-less-button')) {
-    event.target.classList.remove('show-less-button');
-    event.target.classList.add('show-more-button');
-    event.target.innerText = 'Show More';
-    get('.card-area').innerHTML = '';
-    let topTenIdeas = ideasArray.filter((idea,index)=>{
-      return index >= ideasArray.length -10;
-    })
-    topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-  }
-  
+
   if (event.target.classList.contains('delete')) {
     var id = event.target.closest('.card').dataset.id;
     var index = returnIndexOfIdeaByID(id);
@@ -130,7 +133,7 @@ function addCardToDOM(idea) {
   newCard.dataset.id = idea.id;
   newCard.classList.add('card');
   newCard.innerHTML =
-  `<span class="searchable">
+    `<span class="searchable">
     <h2 class="card-title editable" contenteditable="true">
       ${idea.title}
     </h2>
