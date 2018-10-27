@@ -127,13 +127,19 @@ function addCardToDOM(idea) {
   var newCard = document.createElement('article');
   newCard.dataset.id = idea.id;
   newCard.innerHTML =
-    `<span class="searchable"><h2 class="card-title editable" contenteditable="true">${idea.title}</h2>
-  <p class="card-body editable" contenteditable="true">${idea.body}</p></span>
-  <div class="idea-footer">
-  <img src="images/downvote.svg" alt="downvote" class="downvote">
-  <img src="images/upvote.svg" alt="upvote" class="upvote">
-  Quality: <span class="quality">${idea.quality}</span>
-  <img src="images/delete.svg" alt="delete" class="delete">
+  `<span class="searchable">
+    <h2 class="card-title editable" contenteditable="true">
+      ${idea.title}
+    </h2>
+    <p class="card-body editable" contenteditable="true">
+      ${idea.body}
+    </p>
+  </span>
+  <div class="card-footer">
+    <img src="images/downvote.svg" alt="downvote" class="downvote svg">
+    <img src="images/upvote.svg" alt="upvote" class="upvote svg">
+    Quality: <span class="quality">${idea.quality}</span>
+    <img src="images/delete.svg" alt="delete" class="delete svg">
   </div>`;
   get('section').prepend(newCard);
 }

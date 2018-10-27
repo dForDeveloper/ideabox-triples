@@ -5,10 +5,6 @@
   padding:0;
 }
 
-button:disabled {
-  background-color: peru;
-}
-
 header {
   background-color: #342a31;
   display: flex;
@@ -23,8 +19,9 @@ h1 {
   margin-left: 15px;
 }
 
-.triples-text {
+h1:after {
   color: #ffffff;
+  content: 'triples';
 }
 
 #search {
@@ -35,6 +32,37 @@ h1 {
   padding-left: 5px;
   width: 230px;
 }
+
+main {
+  background-color: #ecf2f2;
+  width: 100%;
+}
+
+form {
+  margin: auto;
+  max-width: 700px;
+  width: 80%;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+  font-weight: 100;
+  padding-bottom: 5px;
+}
+
+.title-label {
+  padding-top: 20px;
+}
+
+#title-input,
+#body-input,
+.save {
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+ }
 
 #title-input {
   height: 40px;
@@ -52,55 +80,22 @@ h1 {
   height: 40px;
 }
 
-main {
-  background-color: #ecf2f2;
-  width: 100%;
+
+button:disabled {
+  background-color: peru;
 }
 
-label, textarea {
-  display: block;
+.card-area {
+  width:100%;
 }
 
-label {
-  font-size: 20px;
-  font-weight: 100;
-  padding-bottom: 5px;
-}
-
-form {
-  margin: auto;
-  max-width: 700px;
-  width: 80%;
-}
-
-#title-input,
-textarea,
-input[type='submit'] {
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  width: 100%;
- }
-
- .title-text {
-  padding-top: 20px;
-}
-
- img {
-  width: 27px;
-}
-
-article {
+.card {
   border:solid 1px #D2CCCD;
   color: #5f5b6c;
   height: 180px;
   margin:auto;
   margin-top: 23px;
   max-width: 700px;
-}
-
-.card-area {
-  width:100%;
 }
 
 .card-title {
@@ -115,10 +110,14 @@ article {
   padding-right: 20px;
 }
 
-.idea-footer {
+.card-footer {
   border-top: solid 1px #D2CCCD;
   padding-left: 15px;
   padding-top: 10px;
+}
+
+.svg {
+  width: 27px;
 }
 
 .delete {
