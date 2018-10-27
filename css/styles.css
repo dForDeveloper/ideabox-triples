@@ -3,6 +3,7 @@
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding:0;
+  outline: none;
 }
 
 header {
@@ -15,7 +16,8 @@ header {
 h1 {
   color: #b2a4d0;
   font-size: 45px;
-  margin:0;
+  font-weight: 800;
+  margin: 0;
 }
 
 h1:after {
@@ -90,7 +92,7 @@ label {
   background-color: #5f5b6c;
   color: white;
   font-size: 21px;
-  font-weight: 700;
+  font-weight: 800;
   height: 40px;
 }
 
@@ -113,7 +115,7 @@ label {
   border-radius: 5px;
   color: #ffffff;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   height: 30px;
 }
 
@@ -146,7 +148,7 @@ button:disabled {
 }
 
 .card-title {
-  font-weight: bold;
+  font-weight: 800;
   padding:20px; 
 }
 
@@ -174,4 +176,26 @@ button:disabled {
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 700px) {
+  header {
+    display: grid;
+    justify-content: center;
+  }
+
+  #search {
+    width: 269px;
+  }
+
+  .search-icon {
+    margin: -5px;
+  }
+
+  form,
+  .filter-buttons,
+  .card,
+  .show-more-or-less {
+    width: 95%;
+  }
 }
