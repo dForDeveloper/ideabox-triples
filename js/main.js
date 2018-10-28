@@ -48,7 +48,7 @@ function showMore(e) {
 //turn all into functions inside this
 get('body').addEventListener('click', function (event) {
   event.preventDefault();
-  console.log(event.target.closest('.show-more-or-less') ? showMore(event) : 'do nothing');
+  event.target.closest('.show-more-or-less') ? showMore(event) : 'do nothing';
   deleteCard(event);
   saveCardEditOnBlur(event);
   upvoteCard(event);  
