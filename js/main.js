@@ -20,7 +20,7 @@ window.onload = function () {
   localStorage.getItem('ideas') && loadFromStorage();
 }
 
-get('body').addEventListener('click', function (event) {
+get('body').addEventListener('click', (event) => {
   event.preventDefault();
   event.target.closest('.card') && saveCardEditOnBlur(event);
   event.target.closest('.filter-quality') && sortCards(event);
@@ -31,7 +31,7 @@ get('body').addEventListener('click', function (event) {
   event.target.classList.contains('upvote') && upvoteCard(event);
 });
 
-get('body').addEventListener('keyup', function (event) {
+get('body').addEventListener('keyup', (event) => {
   event.key === 'Enter' && event.target.closest('.card') !== null &&
     saveUserEdits(event.target.closest('.card').dataset.id);
   event.target.id === 'search' && searchCards(event);
