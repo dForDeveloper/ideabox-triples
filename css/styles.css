@@ -76,7 +76,10 @@ label {
   border-radius: 5px;
   margin-bottom: 20px;
   width: 100%;
+  box-shadow: 1px 0 1px #bababa, -0.2em 0 0.8em #bababa;
+
  }
+
 
 #title-input {
   height: 40px;
@@ -123,6 +126,7 @@ label {
   grid-column: 1/4;
   margin: 0 auto 20px;
   width: 50%;
+
 }
 
 button:disabled {
@@ -141,6 +145,7 @@ button:disabled {
   margin-top: 23px;
   max-width: 700px;
   width: 80%;
+  box-shadow: 1px 0 1px #bababa, -0.2em 0 0.8em #bababa;
 }
 
 .searchable {
@@ -197,4 +202,12 @@ button:disabled {
   .show-more-or-less {
     width: 95%;
   }
+}
+
+
+.filter-quality:hover, .save:hover, .show-more-button:hover{
+  color:black;
+  background-color: #b2a4d0;
+  transition-delay: .05s;
+
 }
