@@ -7,9 +7,7 @@ class Idea {
   }
 
   saveToStorage(ideasArray, isNewCard) {
-    if (isNewCard) {
-      ideasArray.push(this);
-    }
+    isNewCard && ideasArray.push(this);
     localStorage.setItem('ideas', JSON.stringify(ideasArray));
   }
 
@@ -26,11 +24,9 @@ class Idea {
   }
 
   updateQuality(direction, ideasArray) {
-    if (direction === 'up' && this.quality !== 2) {
-      this.quality++;
-    } else if (direction === 'down' && this.quality !== 0) {
-      this.quality--;
-    }
+    direction === 'up' && this.quality !== 2 && this.quality++ ||
+      direction === 'down' && this.quality !== 0 && this.quality--;
+
     this.saveToStorage(ideasArray);
     return this.quality;
   }

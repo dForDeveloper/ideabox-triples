@@ -1,4 +1,4 @@
-var ideasArray = [];
+let ideasArray = [];
 
 function generateIdeasArray(num) {
   for (var i = 0; i < (num || 50); i++) {
@@ -17,127 +17,29 @@ function generateIdeasArray(num) {
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
 window.onload = function () {
-  if (localStorage.getItem('ideas')) {
-    ideasArray = JSON.parse(localStorage.getItem('ideas'));
-    let topTenIdeas = ideasArray.filter((idea, index) => {
-      return index >= ideasArray.length - 10;
-    })
-    topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-    ideasArray = ideasArray.map(eachObj => eachObj = new Idea(eachObj.id, eachObj.title, eachObj.body, eachObj.quality));
-  }
+  localStorage.getItem('ideas') && loadFromStorage();
 }
 
-function showAll() {
-  ideasArray.forEach(e => addCardToDOM(e));
-  return 'Show Less';
-}
-function showLess() {
-  const topTenIdeas = ideasArray.filter((idea, index) => {
-    return index >= ideasArray.length - 10;
-  })
-  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-  return 'Show More';
-}
-function showMore(e) {
-  const showMoreButton = e.target;
-  get('.card-area').innerHTML = '';
-  showMoreButton.innerText = showMoreButton.innerText === 'Show More' ? showAll() : showLess();
-  return (true);
-}
-
-//turn all into functions inside this
-get('body').addEventListener('click', function (event) {
+get('body').addEventListener('click', (event) => {
   event.preventDefault();
-  event.target.closest('.show-more-or-less') ? showMore(event) : 'do nothing';
-  deleteCard(event);
-  saveCardEditOnBlur(event);
-  upvoteCard(event);  
-  downvoteCard(event);  
-  if (event.target.closest('.filter-quality')) {
-    sortCards(event);
-  }
-  if (event.target.classList.contains('save')) {
-    saveNewCard(event);
-  }
+  event.target.closest('.card') && saveCardEditOnBlur(event);
+  event.target.closest('.filter-quality') && sortCards(event);
+  event.target.closest('.show-more-or-less') && showMore(event);
+  event.target.classList.contains('delete') && deleteCard(event);
+  event.target.classList.contains('downvote') && downvoteCard(event);
+  event.target.classList.contains('save') && saveNewCard(event);
+  event.target.classList.contains('upvote') && upvoteCard(event);
 });
 
-get('body').addEventListener('keyup', function (event) {
-  if (event.key === 'Enter' && event.target.closest('.card') !== null) {
+get('body').addEventListener('keyup', (event) => {
+  event.key === 'Enter' && event.target.closest('.card') !== null &&
     saveUserEdits(event.target.closest('.card').dataset.id);
-  }
-  searchCards(event);
+  event.target.id === 'search' && searchCards(event);
 })
 
-function deleteCard(event) {
-  if (event.target.classList.contains('delete')) {
-    var id = event.target.closest('.card').dataset.id;
-    var index = returnIndexOfIdeaByID(id);
-    ideasArray[index].deleteFromStorage(index, ideasArray);
-    event.target.closest('.card').remove();
-  }
-}
-
-function saveCardEditOnBlur(event) {
-  if (event.target.closest('.card')) {
-    var id = event.target.closest('.card').dataset.id;
-    event.target.onblur = event => saveUserEdits(id);
-  }
-}
-
-function upvoteCard(event) {
-  if (event.target.classList.contains('upvote')) {
-    const id = event.target.closest('.card').dataset.id;
-    const index = returnIndexOfIdeaByID(id);
-    const qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
-    const qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
-    event.target.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
-  }
-}
-
-function downvoteCard(event) {
-  if (event.target.classList.contains('downvote')) {
-    const id = event.target.closest('.card').dataset.id;
-    const index = returnIndexOfIdeaByID(id);
-    const qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
-    const qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
-    event.target.nextElementSibling.nextElementSibling.innerText = `${qualityArray[qualityIndex]}`;
-  }
-}
-
-function saveNewCard(event) {
-  if (ideasArray.length !== 0) {
-    var nextId = ideasArray[ideasArray.length - 1].id + 1
-  } else {
-    var nextId = 0;
-  }
-  var title = get('#title-input').value;
-  var body = get('#body-input').value;
-  var newIdea = new Idea(nextId, title, body);
-  newIdea.saveToStorage(ideasArray, true);
-  addCardToDOM(newIdea);
-  clearInput();
-}
-
-function saveUserEdits(id) {
-  var cardTitle = get(`.card[data-id='${id}'] .card-title`).innerText;
-  var cardBody = get(`.card[data-id='${id}'] .card-body`).innerText;
-  var index = returnIndexOfIdeaByID(id);
-  ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
-  event.target.blur();
-}
-
-function get(element) {
-  return document.querySelector(element);
-}
-
-function clearInput() {
-  get('#title-input').value = null;
-  get('#body-input').value = null;
-}
-
 function addCardToDOM(idea) {
-  var newCard = document.createElement('article');
-  let qualityArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const newCard = document.createElement('article');
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
   newCard.dataset.id = idea.id;
   newCard.classList.add('card');
   newCard.innerHTML =
@@ -152,50 +54,143 @@ function addCardToDOM(idea) {
   <div class="card-footer">
     <img src="images/downvote.svg" alt="downvote" class="downvote svg">
     <img src="images/upvote.svg" alt="upvote" class="upvote svg">
-    <span class="quality">${qualityArray[idea.quality]}</span>
+    <span class="quality">${qArray[idea.quality]}</span>
     <img src="images/delete.svg" alt="delete" class="delete svg">
   </div>`;
   get('.card-area').prepend(newCard);
 }
 
-function sortCards(e) {
-  e.preventDefault();
-  var clickedButton = e.target;
-  var clickedButtonQuality = e.target.dataset.quality;
-  let id, index;
-  if (clickedButtonQuality !== 'all qualities') {
-    document.querySelectorAll('.quality').forEach(function (span) {
-      id = span.closest('.card').dataset.id;
-      index = returnIndexOfIdeaByID(id);
-      if (parseInt(clickedButtonQuality) === ideasArray[index].quality) {
-        span.closest('.card').classList.remove('hidden');
-      } else {
-        span.closest('.card').classList.add('hidden');
-      }
-    });
-  } else {
-    document.querySelectorAll('.quality').forEach(function (span) {
-      span.closest('.card').classList.remove('hidden');
-    });
-  }
-  document.querySelectorAll('button').forEach(function (button) {
-    button.disabled = false;
-  });
-  clickedButton.disabled = true;
+function clearInput() {
+  get('#title-input').value = null;
+  get('#body-input').value = null;
 }
 
-function searchCards(event) {
-  if (event.target.id === 'search') {
-    get('.unfilter-button').disabled = false;
-    get('.unfilter-button').click();
-    document.querySelectorAll('.searchable').forEach(elem => {
-      if (!elem.innerText.includes(event.target.value)) {
-        elem.closest('.card').classList.add('hidden');
-      }
-    });
-  }
+function deleteCard(event) {
+  const id = event.target.closest('.card').dataset.id;
+  const index = returnIndexOfIdeaByID(id);
+  ideasArray[index].deleteFromStorage(index, ideasArray);
+  event.target.closest('.card').remove();
+}
+
+function downvoteCard(event) {
+  const qualityTextElem = event.target.nextElementSibling.nextElementSibling;
+  const id = event.target.closest('.card').dataset.id;
+  const index = returnIndexOfIdeaByID(id);
+  const qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  qualityTextElem.innerText = `${qArray[qualityIndex]}`;
+}
+
+function get(element) {
+  return document.querySelector(element);
+}
+
+function getAll(element) {
+  return document.querySelectorAll(element);
+}
+
+function hideCards(card) {
+  card.classList.remove('hidden');
+  return true;
+}
+
+function loadFromStorage() {
+  ideasArray = JSON.parse(localStorage.getItem('ideas'));
+  const topTenIdeas = ideasArray.filter((idea, index) => {
+    return index >= ideasArray.length - 10;
+  })
+  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+  ideasArray = ideasArray.map(ida => {
+    return idea = new Idea(idea.id, idea.title, idea.body, idea.quality);
+  });
 }
 
 function returnIndexOfIdeaByID(inID) {
   return ideasArray.findIndex(obj => obj.id === parseInt(inID));
+}
+
+function saveCardEditOnBlur(event) {
+  const id = event.target.closest('.card').dataset.id;
+  event.target.onblur = event => saveUserEdits(id);
+}
+
+function saveNewCard(event) {
+  let nextId;
+  ideasArray.length !== 0 &&
+    (nextId = ideasArray[ideasArray.length - 1].id + 1) ||
+    (nextId = 0);
+  const title = get('#title-input').value;
+  const body = get('#body-input').value;
+  const newIdea = new Idea(nextId, title, body);
+  newIdea.saveToStorage(ideasArray, true);
+  addCardToDOM(newIdea);
+  clearInput();
+}
+
+function saveUserEdits(id) {
+  const cardTitle = get(`.card[data-id='${id}'] .card-title`).innerText;
+  const cardBody = get(`.card[data-id='${id}'] .card-body`).innerText;
+  const index = returnIndexOfIdeaByID(id);
+  ideasArray[index].updateSelf(cardTitle, cardBody, ideasArray, index);
+  event.target.blur();
+}
+
+function searchCards(event) {
+  get('.unfilter-button').disabled = false;
+  get('.unfilter-button').click();
+  document.querySelectorAll('.searchable').forEach(elem => {
+    !elem.innerText.includes(event.target.value) &&
+      elem.closest('.card').classList.add('hidden');
+  });
+}
+
+function showAll() {
+  ideasArray.forEach(e => addCardToDOM(e));
+  return 'Show Less';
+}
+
+function showLess() {
+  const topTenIdeas = ideasArray.filter((idea, index) => {
+    return index >= ideasArray.length - 10;
+  })
+  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+  return 'Show More';
+}
+
+function showMore(e) {
+  const showMoreButton = e.target;
+  get('.card-area').innerHTML = '';
+  showMoreButton.innerText === 'Show More' && showAll() || showLess();
+  return (true);
+}
+
+function showSingleQuality(clickedButtonQuality) {
+  let id, index;
+  document.querySelectorAll('.quality').forEach(function (span) {
+    id = span.closest('.card').dataset.id;
+    index = returnIndexOfIdeaByID(id);
+    parseInt(clickedButtonQuality) === ideasArray[index].quality &&
+      hideCards(span.closest('.card')) ||
+      span.closest('.card').classList.add('hidden');
+  });
+  return true;
+}
+
+function sortCards(event) {
+  event.preventDefault();
+  const clickedButtonQuality = event.target.dataset.quality;
+  clickedButtonQuality !== 'all qualities' &&
+    showSingleQuality(clickedButtonQuality) ||
+    getAll('.quality').forEach(span => hideCards(span.closest('.card')));
+  getAll('button').forEach(button => button.disabled = false);
+  event.target.disabled = true;
+}
+
+function upvoteCard(event) {
+  const qualityTextElem = event.target.nextElementSibling;
+  const id = event.target.closest('.card').dataset.id;
+  const index = returnIndexOfIdeaByID(id);
+  const qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  qualityTextElem.innerText = `${qArray[qualityIndex]}`;
 }
