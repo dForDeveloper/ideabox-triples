@@ -184,10 +184,6 @@ button:disabled {
   content: "Show Less";
 }
 
-.hidden {
-  display: none;
-}
-
 @media screen and (max-width: 700px) {
   header {
     display: grid;

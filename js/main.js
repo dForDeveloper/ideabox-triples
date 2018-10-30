@@ -87,11 +87,6 @@ function getAll(element) {
   return document.querySelectorAll(element);
 }
 
-function hideCards(card) {
-  card.classList.remove('hidden');
-  return true;
-}
-
 function loadFromStorage() {
   ideasArray = JSON.parse(localStorage.getItem('ideas'));
   ideasArray = ideasArray.map(idea => {
@@ -116,8 +111,7 @@ function saveCardEditOnBlur(event) {
 function saveNewCard(event) {
   let nextId;
   ideasArray.length !== 0 &&
-    (nextId = ideasArray[ideasArray.length - 1].id + 1) ||
-    (nextId = 0);
+    (nextId = ideasArray[ideasArray.length - 1].id + 1) || (nextId = 0);
   const title = get('#title-input').value;
   const body = get('#body-input').value;
   const newIdea = new Idea(nextId, title, body);
@@ -135,8 +129,7 @@ function saveUserEdits(id) {
 }
 
 function searchCards(event) {
-  get('.unfilter-button').disabled = false;
-  get('.unfilter-button').click();
+  unfilterCards();
   removeCardsFromDOM();
   ideasArray.forEach(idea => addCardToDOM(idea));
   getAll('.searchable').forEach(elem => {
@@ -144,6 +137,7 @@ function searchCards(event) {
       elem.closest('.card').remove();
   });
   event.target.value === '' && showTen();
+  switchShowLessButton()
 }
 
 function showMore(e) {
@@ -157,28 +151,22 @@ function showMore(e) {
 
 function showLess(e) {
   showTen();
-  e.target.remove();
-  const newButton = document.createElement('button');
-  newButton.classList.add('show-more-button');
-  get('.show-more-or-less').append(newButton);
+  switchShowLessButton();
 }
 
 function showMoreOrLess(e) {
-  // console.log(button);
   e.target.classList.contains('show-more-button') && showMore(e);
   e.target.classList.contains('show-less-button') && showLess(e);
-  return (true);
+  return true;
 }
 
 function showSingleQuality(clickedButtonQuality) {
-  let id, index;
-  document.querySelectorAll('.quality').forEach(function (span) {
-    id = span.closest('.card').dataset.id;
-    index = returnIndexOfIdeaByID(id);
-    parseInt(clickedButtonQuality) === ideasArray[index].quality &&
-      hideCards(span.closest('.card')) ||
-      span.closest('.card').classList.add('hidden');
+  removeCardsFromDOM();
+  const filteredIdeas = ideasArray.filter(idea => {
+    return idea.quality === parseInt(clickedButtonQuality);
   });
+  filteredIdeas.forEach(idea => addCardToDOM(idea));
+  switchShowLessButton()
   return true;
 }
 
@@ -195,9 +183,21 @@ function sortCards(event) {
   const clickedButtonQuality = event.target.dataset.quality;
   clickedButtonQuality !== 'all qualities' &&
     showSingleQuality(clickedButtonQuality) ||
-    getAll('.quality').forEach(span => hideCards(span.closest('.card')));
+    showTen();
   getAll('button').forEach(button => button.disabled = false);
   event.target.disabled = true;
+}
+
+function switchShowLessButton() {
+  const newButton = document.createElement('button');
+  newButton.classList.add('show-more-button');
+  get('.show-more-or-less').innerHTML = '';
+  get('.show-more-or-less').append(newButton);
+}
+
+function unfilterCards() {
+  get('.unfilter-button').disabled = false;
+  get('.unfilter-button').click();
 }
 
 function upvoteCard(event) {
