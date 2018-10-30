@@ -24,7 +24,7 @@ get('body').addEventListener('click', (event) => {
   event.preventDefault();
   event.target.closest('.card') && saveCardEditOnBlur(event);
   event.target.closest('.filter-quality') && sortCards(event);
-  event.target.closest('.show-more-or-less') && showMore(event);
+  event.target.closest('.show-more-or-less') && showMoreOrLess(event);
   event.target.classList.contains('delete') && deleteCard(event);
   event.target.classList.contains('downvote') && downvoteCard(event);
   event.target.classList.contains('save') && saveNewCard(event);
@@ -100,7 +100,7 @@ function loadFromStorage() {
     return index >= ideasArray.length - 10;
   })
   topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-  ideasArray = ideasArray.map(ida => {
+  ideasArray = ideasArray.map(idea => {
     return idea = new Idea(idea.id, idea.title, idea.body, idea.quality);
   });
 }
@@ -144,23 +144,31 @@ function searchCards(event) {
   });
 }
 
-function showAll() {
+function showMore(e) {
+  get('.card-area').innerHTML = '';
   ideasArray.forEach(e => addCardToDOM(e));
-  return 'Show Less';
+  e.target.remove();
+  const newButton = document.createElement('button');
+  newButton.classList.add('show-less-button');
+  get('.show-more-or-less').append(newButton);
 }
 
-function showLess() {
+function showLess(e) {
+  get('.card-area').innerHTML = '';
   const topTenIdeas = ideasArray.filter((idea, index) => {
     return index >= ideasArray.length - 10;
   })
   topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
-  return 'Show More';
+  e.target.remove();
+  const newButton = document.createElement('button');
+  newButton.classList.add('show-more-button');
+  get('.show-more-or-less').append(newButton);
 }
 
-function showMore(e) {
-  const showMoreButton = e.target;
-  get('.card-area').innerHTML = '';
-  showMoreButton.innerText === 'Show More' && showAll() || showLess();
+function showMoreOrLess(e) {
+  // console.log(button);
+  e.target.classList.contains('show-more-button') && showMore(e);
+  e.target.classList.contains('show-less-button') && showLess(e);
   return (true);
 }
 
