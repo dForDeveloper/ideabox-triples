@@ -16,9 +16,7 @@ function generateIdeasArray(num) {
 // generateIdeasArray();
 //IGNORE ABOVE IT IS FOR GENERATING TEST CARDS//
 
-window.onload = function () {
-  localStorage.getItem('ideas') && loadFromStorage();
-}
+window.onload = () => localStorage.getItem('ideas') && loadFromStorage();
 
 get('body').addEventListener('click', (event) => {
   event.preventDefault();
@@ -96,13 +94,14 @@ function hideCards(card) {
 
 function loadFromStorage() {
   ideasArray = JSON.parse(localStorage.getItem('ideas'));
-  const topTenIdeas = ideasArray.filter((idea, index) => {
-    return index >= ideasArray.length - 10;
-  })
-  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
   ideasArray = ideasArray.map(idea => {
     return idea = new Idea(idea.id, idea.title, idea.body, idea.quality);
   });
+  showTen();
+}
+
+function removeCardsFromDOM() {
+  get('.card-area').innerHTML = '';
 }
 
 function returnIndexOfIdeaByID(inID) {
@@ -138,15 +137,18 @@ function saveUserEdits(id) {
 function searchCards(event) {
   get('.unfilter-button').disabled = false;
   get('.unfilter-button').click();
-  document.querySelectorAll('.searchable').forEach(elem => {
+  removeCardsFromDOM();
+  ideasArray.forEach(idea => addCardToDOM(idea));
+  getAll('.searchable').forEach(elem => {
     !elem.innerText.includes(event.target.value) &&
-      elem.closest('.card').classList.add('hidden');
+      elem.closest('.card').remove();
   });
+  event.target.value === '' && showTen();
 }
 
 function showMore(e) {
-  get('.card-area').innerHTML = '';
-  ideasArray.forEach(e => addCardToDOM(e));
+  removeCardsFromDOM();
+  ideasArray.forEach(idea => addCardToDOM(idea));
   e.target.remove();
   const newButton = document.createElement('button');
   newButton.classList.add('show-less-button');
@@ -154,11 +156,7 @@ function showMore(e) {
 }
 
 function showLess(e) {
-  get('.card-area').innerHTML = '';
-  const topTenIdeas = ideasArray.filter((idea, index) => {
-    return index >= ideasArray.length - 10;
-  })
-  topTenIdeas.forEach(eachObj => addCardToDOM(eachObj));
+  showTen();
   e.target.remove();
   const newButton = document.createElement('button');
   newButton.classList.add('show-more-button');
@@ -182,6 +180,14 @@ function showSingleQuality(clickedButtonQuality) {
       span.closest('.card').classList.add('hidden');
   });
   return true;
+}
+
+function showTen() {
+  removeCardsFromDOM();
+  const tenNewestIdeas = ideasArray.filter((idea, index) => {
+    return index >= ideasArray.length - 10;
+  })
+  tenNewestIdeas.forEach(idea => addCardToDOM(idea));
 }
 
 function sortCards(event) {
