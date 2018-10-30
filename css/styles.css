@@ -5,6 +5,10 @@
   padding:0;
 }
 
+body {
+  padding-bottom: 20px;
+}
+
 header {
   background-color: #342a31;
   display: flex;
@@ -123,10 +127,7 @@ label {
 .unfilter-button,
 .show-more-button,
 .show-less-button {
-  grid-column: 1/4;
-  margin: 0 auto 20px;
-  width: 50%;
-
+  grid-column: 2/3;
 }
 
 button:disabled {
@@ -178,8 +179,12 @@ button:disabled {
   width: 27px;
 }
 
-.hidden {
-  display: none;
+.show-more-button::before {
+  content: "Show More";
+}
+
+.show-less-button::before {
+  content: "Show Less";
 }
 
 @media screen and (max-width: 700px) {
