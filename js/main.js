@@ -29,11 +29,15 @@ get('body').addEventListener('click', (event) => {
   event.target.classList.contains('upvote') && upvoteCard(event);
 });
 
-get('body').addEventListener('keyup', (event) => {
+get('.card-area').addEventListener('keypress', (event) => {
   event.key === 'Enter' && event.target.closest('.card') !== null &&
     saveUserEdits(event.target.closest('.card').dataset.id);
-  event.target.id === 'search' && searchCards(event);
 })
+
+get('body').addEventListener('keyup', (event) => {
+  event.target.id === 'search' && searchCards(event);
+  event.target.closest('form') && checkEmptyOr120(event);
+});
 
 function addCardToDOM(idea) {
   const newCard = document.createElement('article');
@@ -56,6 +60,15 @@ function addCardToDOM(idea) {
     <img src="images/delete.svg" alt="delete" class="delete svg">
   </div>`;
   get('.card-area').prepend(newCard);
+}
+
+function checkEmptyOr120(event) {
+  (get('#title-input').value.length > 120 || 
+  get('#title-input').value.length < 1 ||
+    get('#body-input').value.length > 120 ||
+    get('#body-input').value.length < 1) &&
+    (get('.save').disabled = true) ||
+    (get('.save').disabled = false);
 }
 
 function clearInput() {
@@ -93,6 +106,7 @@ function loadFromStorage() {
     return idea = new Idea(idea.id, idea.title, idea.body, idea.quality);
   });
   showTen();
+  get('.save').disabled = true;
 }
 
 function removeCardsFromDOM() {

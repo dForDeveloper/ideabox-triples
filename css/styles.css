@@ -84,13 +84,13 @@ label {
 
  }
 
-
 #title-input {
   height: 40px;
 }
 
 #body-input {
   height: 100px;
+  resize: none;
 }
 
 .save { 
@@ -99,6 +99,10 @@ label {
   font-size: 21px;
   font-weight: 800;
   height: 40px;
+}
+
+.save:disabled {
+  opacity: .5;
 }
 
 .filter-buttons,
@@ -150,6 +154,7 @@ button:disabled {
 }
 
 .searchable {
+  line-height: 40px;
   padding: 20px;
 }
 
@@ -207,7 +212,7 @@ button:disabled {
 }
 
 
-.filter-quality:hover, .save:hover, .show-more-button:hover{
+.filter-quality:hover, .save:hover:enabled, .show-more-button:hover{
   color:black;
   background-color: #b2a4d0;
   transition-delay: .05s;
