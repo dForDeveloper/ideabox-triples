@@ -22,8 +22,10 @@
       <form>
         <label for="title-input" class="title-label">Title</label>
         <input id="title-input" type="text">
+        <div class="char-count-title char-count">Character Count: 0</div>
         <label for="body-input">Body</label>
         <textarea id="body-input"></textarea>
+        <div class="char-count-body char-count">Character Count: 0</div>
         <input type="submit" class="save" value="Save">
       </form>
     </main>
@@ -31,6 +33,8 @@
       <button class="swill-button filter-quality" data-quality="0">Swill</button>
       <button class="plausible-button filter-quality" data-quality="1">Plausible</button>
       <button class="genius-button filter-quality" data-quality="2">Genius</button>
+      <button class="extraordinary-button filter-quality" data-quality="3">Extraordinary</button>
+      <button class="million-dollar-button filter-quality" data-quality="4">Million Dollar</button>
       <button class="unfilter-button filter-quality" data-quality="all qualities">All Qualities</button>
     </section>
     <section class="card-area">

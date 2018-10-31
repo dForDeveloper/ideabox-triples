@@ -40,6 +40,14 @@ h1:after {
   width: 230px;
 }
 
+input:focus,
+textarea:focus,
+.editable:focus {
+  outline-color: #b2a4d0;
+  outline-style: auto;
+  outline-width: 4px;
+}
+
 .search-icon {
   background-color: #aeaab7;
   border: none;
@@ -78,12 +86,10 @@ label {
 .save {
   border: none;
   border-radius: 5px;
-  margin-bottom: 20px;
   width: 100%;
   box-shadow: 1px 0 1px #bababa, -0.2em 0 0.8em #bababa;
 
  }
-
 
 #title-input {
   height: 40px;
@@ -91,6 +97,7 @@ label {
 
 #body-input {
   height: 100px;
+  resize: none;
 }
 
 .save { 
@@ -99,6 +106,17 @@ label {
   font-size: 21px;
   font-weight: 800;
   height: 40px;
+  margin-bottom: 20px;
+}
+
+.save:disabled {
+  opacity: .5;
+}
+
+.char-count {
+  padding-bottom: 20px;
+  padding-top: 5px;
+  text-align: right;
 }
 
 .filter-buttons,
@@ -124,7 +142,6 @@ label {
   height: 30px;
 }
 
-.unfilter-button,
 .show-more-button,
 .show-less-button {
   grid-column: 2/3;
@@ -150,6 +167,7 @@ button:disabled {
 }
 
 .searchable {
+  line-height: 40px;
   padding: 20px;
 }
 
@@ -207,9 +225,8 @@ button:disabled {
 }
 
 
-.filter-quality:hover, .save:hover, .show-more-button:hover{
+.filter-quality:hover, .save:hover:enabled, .show-more-button:hover{
   color:black;
   background-color: #b2a4d0;
   transition-delay: .05s;
-
 }

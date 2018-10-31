@@ -29,15 +29,20 @@ get('body').addEventListener('click', (event) => {
   event.target.classList.contains('upvote') && upvoteCard(event);
 });
 
-get('body').addEventListener('keyup', (event) => {
+get('.card-area').addEventListener('keypress', (event) => {
   event.key === 'Enter' && event.target.closest('.card') !== null &&
     saveUserEdits(event.target.closest('.card').dataset.id);
-  event.target.id === 'search' && searchCards(event);
 })
+
+get('body').addEventListener('keyup', (event) => {
+  event.target.id === 'search' && searchCards(event);
+  event.target.closest('form') && checkEmptyOr120(event);
+});
 
 function addCardToDOM(idea) {
   const newCard = document.createElement('article');
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   newCard.dataset.id = idea.id;
   newCard.classList.add('card');
   newCard.innerHTML =
@@ -58,6 +63,18 @@ function addCardToDOM(idea) {
   get('.card-area').prepend(newCard);
 }
 
+function checkEmptyOr120(event) {
+  get('.char-count-title').innerText = 
+  `Character Count: ${get('#title-input').value.length}`;
+  get('.char-count-body').innerText = 
+  `Character Count: ${get('#body-input').value.length}`;
+  (get('#title-input').value.length > 120 || 
+  get('#title-input').value.length < 1 ||
+    get('#body-input').value.length > 120 ||
+    get('#body-input').value.length < 1) &&
+    (get('.save').disabled = true) || (get('.save').disabled = false);
+}
+
 function clearInput() {
   get('#title-input').value = null;
   get('#body-input').value = null;
@@ -75,7 +92,8 @@ function downvoteCard(event) {
   const id = event.target.closest('.card').dataset.id;
   const index = returnIndexOfIdeaByID(id);
   const qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   qualityTextElem.innerText = `${qArray[qualityIndex]}`;
 }
 
@@ -93,6 +111,7 @@ function loadFromStorage() {
     return idea = new Idea(idea.id, idea.title, idea.body, idea.quality);
   });
   showTen();
+  get('.save').disabled = true;
 }
 
 function removeCardsFromDOM() {
@@ -205,6 +224,7 @@ function upvoteCard(event) {
   const id = event.target.closest('.card').dataset.id;
   const index = returnIndexOfIdeaByID(id);
   const qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   qualityTextElem.innerText = `${qArray[qualityIndex]}`;
 }
