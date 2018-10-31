@@ -40,6 +40,14 @@ h1:after {
   width: 230px;
 }
 
+input:focus,
+textarea:focus,
+.editable:focus {
+  outline-color: #b2a4d0;
+  outline-style: auto;
+  outline-width: 4px;
+}
+
 .search-icon {
   background-color: #aeaab7;
   border: none;
@@ -78,7 +86,6 @@ label {
 .save {
   border: none;
   border-radius: 5px;
-  margin-bottom: 20px;
   width: 100%;
   box-shadow: 1px 0 1px #bababa, -0.2em 0 0.8em #bababa;
 
@@ -99,10 +106,17 @@ label {
   font-size: 21px;
   font-weight: 800;
   height: 40px;
+  margin-bottom: 20px;
 }
 
 .save:disabled {
   opacity: .5;
+}
+
+.char-count {
+  padding-bottom: 20px;
+  padding-top: 5px;
+  text-align: right;
 }
 
 .filter-buttons,
@@ -128,7 +142,6 @@ label {
   height: 30px;
 }
 
-.unfilter-button,
 .show-more-button,
 .show-less-button {
   grid-column: 2/3;
@@ -216,5 +229,4 @@ button:disabled {
   color:black;
   background-color: #b2a4d0;
   transition-delay: .05s;
-
 }

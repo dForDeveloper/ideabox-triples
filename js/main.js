@@ -41,7 +41,8 @@ get('body').addEventListener('keyup', (event) => {
 
 function addCardToDOM(idea) {
   const newCard = document.createElement('article');
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   newCard.dataset.id = idea.id;
   newCard.classList.add('card');
   newCard.innerHTML =
@@ -63,12 +64,15 @@ function addCardToDOM(idea) {
 }
 
 function checkEmptyOr120(event) {
+  get('.char-count-title').innerText = 
+  `Character Count: ${get('#title-input').value.length}`;
+  get('.char-count-body').innerText = 
+  `Character Count: ${get('#body-input').value.length}`;
   (get('#title-input').value.length > 120 || 
   get('#title-input').value.length < 1 ||
     get('#body-input').value.length > 120 ||
     get('#body-input').value.length < 1) &&
-    (get('.save').disabled = true) ||
-    (get('.save').disabled = false);
+    (get('.save').disabled = true) || (get('.save').disabled = false);
 }
 
 function clearInput() {
@@ -88,7 +92,8 @@ function downvoteCard(event) {
   const id = event.target.closest('.card').dataset.id;
   const index = returnIndexOfIdeaByID(id);
   const qualityIndex = ideasArray[index].updateQuality('down', ideasArray);
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   qualityTextElem.innerText = `${qArray[qualityIndex]}`;
 }
 
@@ -219,6 +224,7 @@ function upvoteCard(event) {
   const id = event.target.closest('.card').dataset.id;
   const index = returnIndexOfIdeaByID(id);
   const qualityIndex = ideasArray[index].updateQuality('up', ideasArray);
-  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius'];
+  const qArray = ['Quality: Swill', 'Quality: Plausible', 'Quality: Genius',
+                  'Quality: Extraordinary', 'Quality: Million Dollar'];
   qualityTextElem.innerText = `${qArray[qualityIndex]}`;
 }

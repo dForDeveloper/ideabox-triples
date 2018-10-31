@@ -24,7 +24,7 @@ class Idea {
   }
 
   updateQuality(direction, ideasArray) {
-    direction === 'up' && this.quality !== 2 && this.quality++ ||
+    direction === 'up' && this.quality !== 4 && this.quality++ ||
       direction === 'down' && this.quality !== 0 && this.quality--;
 
     this.saveToStorage(ideasArray);
